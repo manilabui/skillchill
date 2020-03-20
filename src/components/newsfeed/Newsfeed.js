@@ -4,11 +4,12 @@ import TopNav from "../nav/TopNav"
 import BottomNav from "../nav/BottomNav"
 
 export default () => {
+
 	return (
 		<Fragment>
 			<Route render={props => (<TopNav {...props} />)} />
 				Newsfeed
-			<Route render={props => (<BottomNav {...props} />)} />
+			<Route render={props => (<BottomNav {...props} currPage="Newsfeed" />)} />
 		</Fragment>
 	)
 }

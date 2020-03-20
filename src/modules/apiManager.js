@@ -16,11 +16,11 @@ export const getAll = async entity => {
 
 export const deleteItem = async (entity, id) => {
   const r = await fetch(`${remoteURL}/${entity}/${id}`, { method: "DELETE", headers})
-  return r.json()
+  return r
 }
 
 export const postItem = async (entity, item) => {
-  const r = await fetch(`${remoteURL}/${entity}`, { 
+  const r = await fetch(`${remoteURL}/${entity}`, {
     method: 'POST', headers, body: JSON.stringify(item)
   })
   return r.json()
