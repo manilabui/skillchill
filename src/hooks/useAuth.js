@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default const useSimpleAuth = () => {
+export default () => {
 
     const [loggedIn, setIsLoggedIn] = useState(false)
 
@@ -34,12 +34,13 @@ export default const useSimpleAuth = () => {
             },
             body: JSON.stringify(credentials)
         })
-            .then(res => res.json())
+            .then(res => {console.log(credentials); return res.json()})
             .then(res => {
                 if ("valid" in res && res.valid && "token" in res) {
                     localStorage.setItem( "skillchill_token", res.token )
                     setIsLoggedIn(true)
-                }
+                } 
+                else alert('Username or password is incorrect.')
             })
     }
 
