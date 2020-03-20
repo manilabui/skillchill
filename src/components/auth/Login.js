@@ -1,21 +1,24 @@
 import React, { useRef } from 'react'
-import { Link, Redirect } from "react-router-dom"
+import { Link } from "react-router-dom"
 import useAuth from '../../hooks/useAuth'
 
 export default props => {
-  const { login } = useAuth()
+  const { login, isAuthenticated } = useAuth()
   const username = useRef()
   const password = useRef()
 
   const handleLogin = e => {
+    e.preventDefault()
+
     const userInfo = {
       username: username.current.value,
       password: password.current.value,
     }
 
-    console.log(username)
     login(userInfo)
-    	.then(() => <Redirect to="/" />)
+    	.then(() => {
+        if (isAuthenticated()) props.history.push({ pathname: "/" })
+      })
   }
 
   return (

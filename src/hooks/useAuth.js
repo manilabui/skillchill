@@ -26,6 +26,7 @@ export default () => {
     }
 
     const login = credentials => {
+        console.log('login')
         return fetch("http://127.0.0.1:8000/login", {
             method: "POST",
             headers: {

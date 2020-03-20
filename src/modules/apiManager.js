@@ -1,32 +1,34 @@
 const remoteURL = 'http://localhost:8000'
-
-export const getItem = (entity, id) =>
-  fetch(`${remoteURL}/${entity}/${id}`).then(result => result.json())
-
-export const getAll = entity => fetch(`${remoteURL}/${entity}`).then(result => result.json())
-
-export const deleteItem = (entity, id) => {
-  return fetch(`${remoteURL}/${entity}/${id}`, {
-    method: 'DELETE',
-  }).then(r => r.json())
+const headers = {
+  Content-Type: "application/json",
+  Authorization: `Token ${localStorage.getItem("skillchill_token")}`
 }
 
-export const postItem = (entity, item) => {
-  return fetch(`${remoteURL}/${entity}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(item),
-  }).then(r => r.json())
+export const getItem = async (entity, id) => {
+  const r = await fetch(`${remoteURL}/${entity}/${id}`, { method: "GET", headers })
+  return r.json()
+}
+
+export const getAll = async entity => {
+  const r = await fetch(`${remoteURL}/${entity}`, { method: "GET", headers })
+  return r.json()
+}
+
+export const deleteItem = async (entity, id) => {
+  const r = await fetch(`${remoteURL}/${entity}/${id}`, { method: "DELETE", headers})
+  return r.json()
+}
+
+export const postItem = async (entity, item) => {
+  const r = await fetch(`${remoteURL}/${entity}`, { 
+    method: 'POST', headers, body: JSON.stringify(item)
+  })
+  return r.json()
 }
 
 export const patchItem = (entity, item) => {
-  return fetch(`${remoteURL}/${entity}/${item.id}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(item),
-  }).then(r => r.json())
+  const r = await fetch(`${remoteURL}/${entity}/${item.id}`, {
+    method: 'PATCH', headers, body: JSON.stringify(item)
+  })
+  return r.json()
 }

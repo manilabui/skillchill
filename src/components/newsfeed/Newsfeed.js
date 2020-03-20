@@ -7,7 +7,7 @@ export default () => {
 	return (
 		<Fragment>
 			<Route render={props => (<TopNav {...props} />)} />
-			Newsfeed
+				Newsfeed
 			<Route render={props => (<BottomNav {...props} />)} />
 		</Fragment>
 	)
