@@ -5,17 +5,19 @@ import { getAll } from "../modules/apiManager"
 import TopNav from "./nav/TopNav"
 import BottomNav from "./nav/BottomNav"
 import Profile from "./profile/Profile"
-import PostCard from "./newsfeed/PostCard"
+import PostList from "./newsfeed/PostList"
 
 export default props => {
 	const { isAuthenticated } = useAuth()
 	const [skillagerId, setId] = useState('')
 	const [userInfo, setUserInfo] = useState({})
 	const [avatar, setAvatar] = useState('http://tachyons.io/img/logo.jpg')
-	const [currPage, setPage] = useState('newsfeed') // or my profile
+	// TODO: change default to 'newsfeed' when that function is done
+	const [currPage, setPage] = useState('my profile') // or my profile/skill/post/profile/search
 	const [currPosts, setPosts] = useState([])
+	const [currUserSkills, setUserSkills] = useState([])
 
-	const getSkillager = () => {
+	const getCurrSkillager = () => {
 		if (isAuthenticated()) {
 			getAll("skillagers")
 		    .then(skillagers => {
@@ -29,17 +31,26 @@ export default props => {
 		}
 	}
 
-	// const getNewsfeedPosts = () => {
+	const getCurrUserSkills = () => {
+		getAll("userskills")
+			.then(userskills => setUserSkills(userskills))
+	}
 
-	// }
+  const getNewsfeedPosts = () => {
+  	console.log('get newsfeed')
+  	// loop through all userskills + do a fetch for each of those skills,
+  	// then order them by date
+  }
 
-  useEffect(getSkillager, [])
+  useEffect(getCurrSkillager, [])
+  useEffect(getCurrUserSkills, [])
   // useEffect(getNewsfeedPosts, [])
 
   const getCurrSkillagerPosts = () => {
   	getAll(`posts?skillager=${skillagerId}`)
   		.then(posts => setPosts(posts))
   }
+
 	// // fetch all the posts related to the current page
 	// const getPosts = (query='') => {
  //      getAll(`posts${query}`)
@@ -52,6 +63,9 @@ export default props => {
 		setPage(newPage)
 
 		if (newPage === 'my profile') getCurrSkillagerPosts()
+
+		// TODO: newsfeed posts
+		if (newPage === 'newsfeed') console.log('newsfeed')
 	}
 
 	// const postsArr = posts.map(post => <PostCard>)
@@ -59,7 +73,7 @@ export default props => {
 	return (
 		<Fragment>
 			<Route render={props => (<TopNav {...props} />)} />
-			{currView}
+				<PostList currPosts={currPosts} />
 			<Route render={props => (
 				<BottomNav {...props} 
 					handlePageChange={handlePageChange}

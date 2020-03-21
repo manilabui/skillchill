@@ -24,19 +24,20 @@ export default ({ currPage, handlePageChange, avatar }) => {
 	return (
 		<Fragment>
 			{showMenu ? menu() : null}
-			<nav className='fixed bottom-0 w-100 bg-washed-blue'>
-				<h2 className='pv2 f5 dib ph3 fw3 fl' onClick={() => handlePageChange('newsfeed')}> Home </h2>
-				<h2 className='pv2 f5 dib pl2 fw3 fl'>
-					<div
-						className="bg-light-blue black br3 pv1 ph2" 
-						onClick={handleMenuDisplay}
-					> {currPage} </div>
-				</h2>
-				<h2 className='pv2 f5 dib pl5 fw3'> + </h2>
+			<nav className='fixed bottom-0 w-100 bg-washed-yellow red bt b--red'>
+				<h2 
+					className='pv2 f6 dib ph3 fw3 fl' 
+					onClick={() => handlePageChange('newsfeed')}
+				> Home </h2>
+				<h2 
+					className='pv2 f6 dib pl2 fw6 fl br3 pv1 ph2 bg-white ba b--red dim'
+					onClick={handleMenuDisplay}
+				> {currPage} </h2>
+				<h2 className='pv2 f6 dib pl5 fw3'> + </h2>
 				<div className='pt3 mb1 dib ph3 fr' onClick={() => handlePageChange('my profile')}>
 				  <img
-				      src={avatar}
-				      className="br-100 h2 w2 dib" alt="avatar" />
+				      src={avatar} alt="avatar"
+				      className="br-100 h2 w2 dib" />
 				</div>
 			</nav>
 		</Fragment>
