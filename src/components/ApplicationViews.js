@@ -6,6 +6,7 @@ import Home from "./Home"
 
 const ApplicationViews = props => {
 
+	// TODO: may add a search route
 
   return (
     <div className="avenir">

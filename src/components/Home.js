@@ -29,7 +29,12 @@ export default props => {
 		}
 	}
 
+	// const getNewsfeedPosts = () => {
+
+	// }
+
   useEffect(getSkillager, [])
+  // useEffect(getNewsfeedPosts, [])
 
   const getCurrSkillagerPosts = () => {
   	getAll(`posts?skillager=${skillagerId}`)
@@ -46,9 +51,7 @@ export default props => {
 	const handlePageChange = newPage => {
 		setPage(newPage)
 
-		if (newPage === 'my profile') {
-			getCurrSkillagerPosts()
-		}
+		if (newPage === 'my profile') getCurrSkillagerPosts()
 	}
 
 	// const postsArr = posts.map(post => <PostCard>)
@@ -56,7 +59,7 @@ export default props => {
 	return (
 		<Fragment>
 			<Route render={props => (<TopNav {...props} />)} />
-			
+			{currView}
 			<Route render={props => (
 				<BottomNav {...props} 
 					handlePageChange={handlePageChange}
