@@ -1,9 +1,8 @@
-import React, { Fragment } from 'react'
-import { Route } from "react-router-dom"
-import TopNav from "../nav/TopNav"
-import BottomNav from "../nav/BottomNav"
+import React from 'react'
 
-export default () => {
+export default props => {
+	
+
 	return (
 		<article>
 				<h4>Post</h4>
