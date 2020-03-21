@@ -1,6 +1,6 @@
 const remoteURL = 'http://localhost:8000'
 const headers = {
-  Content-Type: "application/json",
+  "Content-Type": "application/json",
   Authorization: `Token ${localStorage.getItem("skillchill_token")}`
 }
 
@@ -26,7 +26,7 @@ export const postItem = async (entity, item) => {
   return r.json()
 }
 
-export const patchItem = (entity, item) => {
+export const patchItem = async (entity, item) => {
   const r = await fetch(`${remoteURL}/${entity}/${item.id}`, {
     method: 'PATCH', headers, body: JSON.stringify(item)
   })

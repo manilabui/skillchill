@@ -1,10 +1,13 @@
 import React, { Fragment, useState } from 'react'
 import './BottomNav.css'
 
-export default ({ currPage }) => {
+export default ({ currPage, handlePageChange, avatar }) => {
 	const [showMenu, setMenuDisplay] = useState(false)
 
 	const handleMenuDisplay = () => (showMenu ? setMenuDisplay(false) : setMenuDisplay(true))
+
+	// TODO: fetch call to get all the user skills.
+	// the user's newsfeed should be part of this list (maybe make the newsfeed a stretch.)
 
 	const menu = () => {
 		return (
@@ -21,18 +24,18 @@ export default ({ currPage }) => {
 	return (
 		<Fragment>
 			{showMenu ? menu() : null}
-			<nav className='tc fixed bottom-0 bg-light-pink w-100'>
-				<h2 className='pv2 f5 dib pl3 fw3 fl'> Home </h2>
+			<nav className='fixed bottom-0 w-100 bg-washed-blue'>
+				<h2 className='pv2 f5 dib ph3 fw3 fl' onClick={() => handlePageChange('newsfeed')}> Home </h2>
 				<h2 className='pv2 f5 dib pl2 fw3 fl'>
 					<div
-						className="bg-light-blue black br2 pv1 ph2" 
+						className="bg-light-blue black br3 pv1 ph2" 
 						onClick={handleMenuDisplay}
 					> {currPage} </div>
 				</h2>
 				<h2 className='pv2 f5 dib pl5 fw3'> + </h2>
-				<div className='pt3 mb1 dib ph3 fr'>
+				<div className='pt3 mb1 dib ph3 fr' onClick={() => handlePageChange('my profile')}>
 				  <img
-				      src="http://tachyons.io/img/logo.jpg"
+				      src={avatar}
 				      className="br-100 h2 w2 dib" alt="avatar" />
 				</div>
 			</nav>

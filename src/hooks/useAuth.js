@@ -26,7 +26,6 @@ export default () => {
     }
 
     const login = credentials => {
-        console.log('login')
         return fetch("http://127.0.0.1:8000/login", {
             method: "POST",
             headers: {
@@ -35,7 +34,7 @@ export default () => {
             },
             body: JSON.stringify(credentials)
         })
-            .then(res => {console.log(credentials); return res.json()})
+            .then(res => res.json())
             .then(res => {
                 if ("valid" in res && res.valid && "token" in res) {
                     localStorage.setItem( "skillchill_token", res.token )
