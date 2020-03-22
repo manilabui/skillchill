@@ -73,7 +73,7 @@ export default props => {
 	return (
 		<Fragment>
 			<Route render={props => (<TopNav {...props} />)} />
-				<PostList currPosts={currPosts} />
+			<PostList currPosts={currPosts} />
 			<Route render={props => (
 				<BottomNav {...props} 
 					handlePageChange={handlePageChange}
