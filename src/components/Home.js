@@ -72,8 +72,11 @@ export default props => {
 
 	return (
 		<Fragment>
-			<Route render={props => (<TopNav {...props} />)} />
+			<div>
+				<Route render={props => (<TopNav {...props} />)} />
+			</div>
 			<PostList currPosts={currPosts} />
+			<div>
 			<Route render={props => (
 				<BottomNav {...props} 
 					handlePageChange={handlePageChange}
@@ -81,6 +84,7 @@ export default props => {
 					avatar={avatar}
 				/>)}
 			/>
+			</div>
 		</Fragment>
 	)
 }
