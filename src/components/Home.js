@@ -12,7 +12,6 @@ export default props => {
 	const [skillagerId, setId] = useState('')
 	const [userInfo, setUserInfo] = useState({})
 	const [avatar, setAvatar] = useState('http://tachyons.io/img/logo.jpg')
-	// TODO: change default to 'newsfeed' when that function is done
 	const [currPage, setPage] = useState('my profile') // or my profile/skill/post/profile/search
 	const [currPosts, setPosts] = useState([])
 	const [currUserSkills, setUserSkills] = useState([])
@@ -31,41 +30,39 @@ export default props => {
 		}
 	}
 
-	const getCurrUserSkills = () => {
-		getAll("userskills")
-			.then(userskills => setUserSkills(userskills))
-	}
-
-  const getNewsfeedPosts = () => {
-  	console.log('get newsfeed')
-  	// loop through all userskills + do a fetch for each of those skills,
-  	// then order them by date
-  }
-
-  useEffect(getCurrSkillager, [])
-  useEffect(getCurrUserSkills, [])
-  // useEffect(getNewsfeedPosts, [])
-
-  const getCurrSkillagerPosts = () => {
-  	getAll(`posts?skillager=${skillagerId}`)
+  const getCurrPosts = (filter, id) => {
+  	getAll(`posts?${filter}=${id}`)
   		.then(posts => setPosts(posts))
   }
 
-	// // fetch all the posts related to the current page
-	// const getPosts = (query='') => {
- //      getAll(`posts${query}`)
- //      	.then(posts => {
- //          console.log(posts)
- //        })
- //  }
+  const getNewsfeedPosts = skillsArr => {
+  	let postsArr = []
+
+  	// BUG: not pulling all posts from the skills the user is following 
+  	// Should I be doing this in the backend?
+		skillsArr.reduce( async (prevPromise, { skill }) => {
+		  await prevPromise
+		  return getAll(`posts?skill=${skill.id}`)
+		}, Promise.resolve())
+			.then(posts => setPosts(posts))
+  }
+
+	const getCurrUserSkills = () => {
+		getAll("userskills")
+			.then(skills => {
+				setUserSkills(skills)
+				getNewsfeedPosts(skills)
+			})
+	}
+
+  useEffect(getCurrSkillager, [])
+  useEffect(getCurrUserSkills, [])
 
 	const handlePageChange = newPage => {
 		setPage(newPage)
 
-		if (newPage === 'my profile') getCurrSkillagerPosts()
-
-		// TODO: newsfeed posts
-		if (newPage === 'newsfeed') console.log('newsfeed')
+		if (newPage === 'my profile') getCurrPosts('skillager', skillagerId)
+		if (newPage === 'newsfeed') getNewsfeedPosts(currUserSkills)
 	}
 
 	// const postsArr = posts.map(post => <PostCard>)
