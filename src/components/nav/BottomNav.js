@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react'
+import { Link, withRouter } from "react-router-dom"
 import './BottomNav.css'
 
 export default ({ currPage, handlePageChange, avatar, userSkills }) => {
@@ -36,8 +37,10 @@ export default ({ currPage, handlePageChange, avatar, userSkills }) => {
 				<h2 
 					className='pv2 f6 dib pl2 fw6 fl br3 pv1 ph2 bg-white ba b--red dim'
 					onClick={handleMenuDisplay}
-				> {currPage} </h2>
-				<h2 className='pv2 f6 dib pl5 fw3' onClick={openCreateForm}> + </h2>
+				> {currPage} </h2>	
+				<h2 className='pv2 f6 dib pl5 fw3 link'>
+					<Link to="/post/new"> + </Link>
+        </h2>
 				<div className='pt3 mb1 dib ph3 fr' onClick={() => handlePageChange('my profile')}>
 				  <img
 				      src={avatar} alt="avatar"
