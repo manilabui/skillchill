@@ -38,13 +38,15 @@ export default props => {
   const getNewsfeedPosts = skillsArr => {
   	let postsArr = []
 
-  	// BUG: not pulling all posts from the skills the user is following 
-  	// Should I be doing this in the backend?
-		skillsArr.reduce( async (prevPromise, { skill }) => {
-		  await prevPromise
-		  return getAll(`posts?skill=${skill.id}`)
-		}, Promise.resolve())
-			.then(posts => setPosts(posts))
+		Promise.all(
+			skillsArr.map(({ skill }) => getAll(`posts?skill=${skill.id}`)))
+				.then(postArrs =>
+					postArrs.reduce(( prevArr, currArr ) => prevArr.concat(currArr), []))
+				.then(posts => {
+					// TODO: need to order them by date
+					setPosts(posts)
+				}
+		)
   }
 
 	const getCurrUserSkills = () => {

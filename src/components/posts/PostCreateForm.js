@@ -1,8 +1,9 @@
-import React, { useRef } from "react"
+import React, { useState, useRef } from "react"
 import { Link, withRouter } from "react-router-dom"
-import FileUpload from './FileUpload'
+import { FileUpload } from './FileUpload'
 
 const PostCreateForm = props => {
+  const [image, setImage] = React.useState('');
   const caption = useRef()
 
   // need a dropdown menu for the userskills
@@ -18,6 +19,11 @@ const PostCreateForm = props => {
       <form className="measure center" onSubmit={handlePostCreation}>
         <fieldset className="ba b--transparent ph0 mh0">
           <legend className="f4 fw6 ph0 mh0">Create Post</legend>
+          <FileUpload
+            onRequestSave={id => setImage(id)}
+            onRequestClear={() => setImage(null)}
+            defaultFiles={[]}
+          />
           <div className="mt3">
             <label className="db fw6 lh-copy f6" htmlFor="caption">
               Caption
