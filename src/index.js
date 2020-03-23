@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from "react-router-dom";
 import './index.css';
 import 'tachyons'
-import Skillchill from './components/Skillchill'
+import ApplicationViews from './components/ApplicationViews'
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
 	<Router>
-		<Skillchill />
+		<ApplicationViews />
 	</Router>, 
 	document.getElementById('root'));
 

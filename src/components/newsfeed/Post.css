@@ -1,0 +1,6 @@
+img, video {
+  object-fit: cover;
+  width:200px;
+  height:400px;
+  z-index: -1000;
+}
