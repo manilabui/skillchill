@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import './BottomNav.css'
 
-export default ({ currPage, handlePageChange, avatar }) => {
+export default ({ currPage, handlePageChange, avatar, userSkills }) => {
 	const [showMenu, setMenuDisplay] = useState(false)
 
 	const handleMenuDisplay = () => (showMenu ? setMenuDisplay(false) : setMenuDisplay(true))
@@ -10,6 +10,10 @@ export default ({ currPage, handlePageChange, avatar }) => {
 	// the user's newsfeed should be part of this list (maybe make the newsfeed a stretch.)
 
 	const menu = () => {
+		const menuItemsArr = userSkills.map(skill => {
+			console.log(skill)
+		})
+
 		return (
 			<ul className="page-menu list pl0 ml3 center mw5 ba b--light-silver br3 bottom-2 fixed z-1">
 			  <li className="ph3 pv2 bb b--light-silver" onClick={handleMenuDisplay}>Mackeral Tabby</li>
@@ -33,7 +37,7 @@ export default ({ currPage, handlePageChange, avatar }) => {
 					className='pv2 f6 dib pl2 fw6 fl br3 pv1 ph2 bg-white ba b--red dim'
 					onClick={handleMenuDisplay}
 				> {currPage} </h2>
-				<h2 className='pv2 f6 dib pl5 fw3'> + </h2>
+				<h2 className='pv2 f6 dib pl5 fw3' onClick={openCreateForm}> + </h2>
 				<div className='pt3 mb1 dib ph3 fr' onClick={() => handlePageChange('my profile')}>
 				  <img
 				      src={avatar} alt="avatar"

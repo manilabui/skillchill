@@ -5,7 +5,7 @@ import { getAll } from "../modules/apiManager"
 import TopNav from "./nav/TopNav"
 import BottomNav from "./nav/BottomNav"
 import Profile from "./profile/Profile"
-import PostList from "./newsfeed/PostList"
+import PostList from "./posts/PostList"
 
 export default props => {
 	const { isAuthenticated } = useAuth()
@@ -65,8 +65,6 @@ export default props => {
 		if (newPage === 'newsfeed') getNewsfeedPosts(currUserSkills)
 	}
 
-	// const postsArr = posts.map(post => <PostCard>)
-
 	return (
 		<Fragment>
 			<div>
@@ -79,6 +77,7 @@ export default props => {
 					handlePageChange={handlePageChange}
 					currPage={currPage} 
 					avatar={avatar}
+					userSkills={currUserSkills}
 				/>)}
 			/>
 			</div>

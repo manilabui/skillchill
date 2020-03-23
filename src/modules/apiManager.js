@@ -1,4 +1,10 @@
+import firebase from "firebase/app";
+import { firebaseConfig } from "./apiKey"
+
+firebase.initializeApp(firebaseConfig);
+
 const remoteURL = 'http://localhost:8000'
+
 const headers = {
   "Content-Type": "application/json",
   Authorization: `Token ${localStorage.getItem("skillchill_token")}`
