@@ -11,8 +11,9 @@ export default ({ currPage, handlePageChange, avatar, userSkills }) => {
 	// the user's newsfeed should be part of this list (maybe make the newsfeed a stretch.)
 
 	const menu = () => {
-		const menuItemsArr = userSkills.map(skill => {
+		const menuItemsArr = userSkills.map((skill, i) => {
 			console.log(skill)
+			// return listItem
 		})
 
 		return (
@@ -43,8 +44,8 @@ export default ({ currPage, handlePageChange, avatar, userSkills }) => {
         </h2>
 				<div className='pt3 mb1 dib ph3 fr' onClick={() => handlePageChange('my profile')}>
 				  <img
-				      src={avatar} alt="avatar"
-				      className="br-100 h2 w2 dib" />
+			      src={avatar} alt="avatar"
+			      className="br-100 h2 w2 dib" />
 				</div>
 			</nav>
 		</Fragment>

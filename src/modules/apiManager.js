@@ -27,8 +27,8 @@ export const postItem = async (entity, item) => {
   return r.json()
 }
 
-export const patchItem = async (entity, item) => {
-  const r = await fetch(`${remoteURL}/${entity}/${item.id}`, {
+export const patchItem = async (entity, id, item) => {
+  const r = await fetch(`${remoteURL}/${entity}/${id}`, {
     method: 'PATCH', headers, body: JSON.stringify(item)
   })
   return r.json()

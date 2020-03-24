@@ -70,6 +70,10 @@ export default ({ id, skillager, skill, post_type }) => {
 				  <img src={avatar} alt="avatar"
 				    className="br-100 h1 w1 dib" />
 				 	<span className='pl2 f6 fw6 dib'>{name}</span>
+				 {/*
+				 	// show this if the current page is your own profile 
+				 	<span className='pr2 f6 fw6 dib fr'>x</span> 
+				 */}
 				</div>
 				<div className='w-100'>
 				<Swipeable 

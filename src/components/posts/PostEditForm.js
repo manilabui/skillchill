@@ -7,6 +7,7 @@ const PostEditForm = ({ location }) => {
   const { id, skill } = location
   const { name, avatar, created_at } = skill
   const [currPostPages, setPages] = useState([])
+  const [currPageId, setPageId] = useState('')
   const [currPageNum, setPageNum] = useState(0)
   const [currPageContent, setContent] = useState('')
   const currPageCaption = useRef()
@@ -15,8 +16,9 @@ const PostEditForm = ({ location }) => {
     getAll(`postpages?post=${id}`)
       .then(pages => {
         if (pages.length) {
-          const { content, page_num } = pages[0]
+          const { id, content, page_num } = pages[0]
           setPages(pages)
+          setPageId(id)
           setPageNum(page_num)
           setContent(content)
         }
@@ -30,10 +32,16 @@ const PostEditForm = ({ location }) => {
 
     if (numOfPages > 1 && currPageNum !== numOfPages) {
       const newPageNum = currPageNum + 1
-      const { content } = currPostPages[currPageNum]
+      const { content, caption } = currPostPages[currPageNum]
 
       setPageNum(newPageNum)
       setContent(content)
+
+      const captionIsNew = caption !== currPageCaption.current.value ? true : false
+
+      if (currPageCaption.current.value && captionIsNew) {
+        patchItem('postpage', )
+      } 
     } 
   }
 
@@ -46,13 +54,13 @@ const PostEditForm = ({ location }) => {
 
       setPageNum(newPageNum)
       setContent(content)
-      setCaption(caption)
     } 
   }
 
   const handlePostPublish = e => {
     e.preventDefault()
     // edit post to publish
+    // patchItem('post', )
   }
 
   return (

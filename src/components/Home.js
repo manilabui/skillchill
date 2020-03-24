@@ -43,7 +43,7 @@ export default props => {
 				.then(postArrs =>
 					postArrs.reduce(( prevArr, currArr ) => prevArr.concat(currArr), []))
 				.then(posts => {
-					// TODO: order posts by date
+					// TODO: order posts by date & remove your own posts
 					setPosts(posts)
 				}
 		)
