@@ -7,7 +7,7 @@ export default ({ id, skillager, skill, post_type }) => {
 	const { name, avatar, created_at } = skill
 	const skill_id = skill.id
 	const [currPostPages, setPages] = useState([])
-	const [currPageNum, setPageNum] = useState(0)
+	const [currPageNum, setPageNum] = useState(1)
 	const [currPageContent, setContent] = useState('')
 	const [currPageCaption, setCaption] = useState('')
 
@@ -17,7 +17,6 @@ export default ({ id, skillager, skill, post_type }) => {
 				if (pages.length) {
 					const { content, caption, page_num } = pages[0]
 					setPages(pages)
-					setPageNum(page_num)
 					setContent(content)
 					setCaption(caption)
 				}

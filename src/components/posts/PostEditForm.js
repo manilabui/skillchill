@@ -3,17 +3,18 @@ import { Link, withRouter } from "react-router-dom"
 import { useSwipeable, Swipeable } from 'react-swipeable'
 import { getAll, patchItem } from "../../modules/apiManager"
 
-const PostEditForm = ({ location }) => {
-  const { id, skill } = location
+const PostEditForm = ({ location, history }) => {
+  const { post_id, skill, post_type } = location.state
   const { name, avatar, created_at } = skill
   const [currPostPages, setPages] = useState([])
   const [currPageId, setPageId] = useState('')
   const [currPageNum, setPageNum] = useState(0)
   const [currPageContent, setContent] = useState('')
-  const currPageCaption = useRef()
+  const [currPageCaption, setCaption] = useState('')
+  const currCaptionInput = useRef()
 
   const getCurrPostPages = () => {
-    getAll(`postpages?post=${id}`)
+    getAll(`postpages?post=${post_id}`)
       .then(pages => {
         if (pages.length) {
           const { id, content, page_num } = pages[0]
@@ -28,21 +29,21 @@ const PostEditForm = ({ location }) => {
   useEffect(getCurrPostPages, [])
 
   const handleLeftPostSwipe = () => {
+    // if their is a new caption, update the currPostPages arr
+
     const numOfPages = currPostPages.length
 
     if (numOfPages > 1 && currPageNum !== numOfPages) {
       const newPageNum = currPageNum + 1
-      const { content, caption } = currPostPages[currPageNum]
+      const { content } = currPostPages[currPageNum]
 
       setPageNum(newPageNum)
       setContent(content)
 
-      const captionIsNew = caption !== currPageCaption.current.value ? true : false
-
-      if (currPageCaption.current.value && captionIsNew) {
-        patchItem('postpage', )
-      } 
-    } 
+      // if their is a new caption, then i
+      // setCaption(caption)
+      // currPageCaption.current.value = currPostPages[currPageNum - 1].caption
+    }   
   }
 
   const handleRightPostSwipe = () => {
@@ -54,14 +55,35 @@ const PostEditForm = ({ location }) => {
 
       setPageNum(newPageNum)
       setContent(content)
-    } 
+      currPageCaption.current.value = currPostPages[currPageNum - 1][caption]
+    }
   }
 
   const handlePostPublish = e => {
     e.preventDefault()
-    // edit post to publish
-    // patchItem('post', )
+    const postObj = {
+      modified_at: null,
+      is_public: true
+    }
+
+    patchItem('post', post_id, postObj)
+
+    history.push('/')
   }
+
+  const currPostElem = post_type === 'Photo'
+    ? 
+      <img avatar='Post'
+        className='w-100'
+        src={currPageContent}
+      /> 
+    :
+      <video autoPlay preload='true'
+        className='w-100' 
+        // onClick={handlePostPageChange} 
+        src={currPageContent}
+        type="video/mp4"
+      />
 
   return (
     <main className='pa4 black-80'>
@@ -88,7 +110,7 @@ const PostEditForm = ({ location }) => {
               className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
               type="text"
               required
-              ref={caption}
+              ref={currCaptionInput}
               id="caption"
               autoFocus
               placeholder=""

@@ -89,7 +89,7 @@ const PostForm = props => {
     }
 
     postItem('posts', postObj)
-      .then(({ id, skill }) => {
+      .then(({ id, skill, post_type }) => {
         Promise.all(
           currContentUrls.map((url, i) => {
             const postPageObj = {
@@ -104,7 +104,7 @@ const PostForm = props => {
         )
           .then(props.history.push({
             pathname: '/postpage/edit',
-            state: { post_id: id, skill }
+            state: { post_id: id, skill, post_type }
           }))
       })
   }
