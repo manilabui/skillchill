@@ -16,15 +16,11 @@ registerPlugin(
   FilePondPluginImagePreview
 )
 
-const post_draft_content = {ids: []}
-
-localStorage.setItem('post_draft', JSON.stringify(post_draft_content))
-
 const storage = firebase.storage().ref()
 
-const PostForm = ({ onRequestSave }) => {
+const PostForm = props => {
   const [currUserSkills, setUserSkills] = useState([])
-  const [currContentIds, setIds] = useState([])
+  const [currContentUrls, setIds] = useState([])
   const [files, setFiles] = useState([])
   const currPostSkill = useRef(null)
   const ref = useRef(null)
@@ -43,9 +39,10 @@ const PostForm = ({ onRequestSave }) => {
     )
   })
 
-  const saveUrl = async url => {
-    const newUrls = await currContentIds.concat(url)
+  const saveUrl = url => {
+    const newUrls = currContentUrls.concat(url)
     setIds(newUrls)
+    console.log(currContentUrls)
   }
 
   const server = {
@@ -87,9 +84,23 @@ const PostForm = ({ onRequestSave }) => {
 
   const handlePostCreation = e => {
     e.preventDefault()
-    // may still post an object to local storage with the references to the urls for the postpages
+    
+    const postObj = {
+      skill_id: currPostSkill.current.value,
+      post_type: 'P',
+      is_public: true
+    }
+    
+    postItem('posts', postObj)
+      .then(r => console.log(r))
     // props.history.push({ pathname: "/postpage/new" })
   }
+
+  const formInput = <input
+      className="b ph3 pv2 input-reset ba b--black bg-transparent grow f6 dib"
+      type="submit"
+      value="Next"
+    />
 
   return (
     <main className='pa4 black-80'>
@@ -120,12 +131,16 @@ const PostForm = ({ onRequestSave }) => {
               setFiles(fileItems.map(fileItem => fileItem.file))
             }}
           />
-        </fieldset>    
-        <input
-          className="b ph3 pv2 input-reset ba b--black bg-transparent grow f6 dib"
-          type="submit"
-          value="Next"
-        />     
+        </fieldset>
+        {
+          !currPostSkill && currContentUrls.length
+          ? (
+            <Link to={{
+              pathname: '/postpage/edit',
+              state: { currContentUrls }
+            }}>{formInput}</Link>
+          ) : formInput
+        }   
       </form>
     </main>
   )
