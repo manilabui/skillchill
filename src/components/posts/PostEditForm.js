@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from "react"
-import { Link, withRouter } from "react-router-dom"
-import { useSwipeable, Swipeable } from 'react-swipeable'
+import { withRouter } from "react-router-dom"
+import { Swipeable } from 'react-swipeable'
 import { getAll, patchItem } from "../../modules/apiManager"
 
 const PostEditForm = ({ location, history }) => {
   const { post_id, skill, post_type } = location.state
-  const { name, avatar, created_at } = skill
+  const { name, avatar } = skill
   const [currPostPages, setPages] = useState([])
-  const [currPageId, setPageId] = useState('')
   const [currPageNum, setPageNum] = useState(0)
   const [currPageContent, setContent] = useState('')
   const [currPageCaption, setCaption] = useState('')
@@ -17,9 +16,8 @@ const PostEditForm = ({ location, history }) => {
     getAll(`postpages?post=${post_id}`)
       .then(pages => {
         if (pages.length) {
-          const { id, content, page_num } = pages[0]
+          const { content, page_num } = pages[0]
           setPages(pages)
-          setPageId(id)
           setPageNum(page_num)
           setContent(content)
         }
@@ -28,21 +26,25 @@ const PostEditForm = ({ location, history }) => {
 
   useEffect(getCurrPostPages, [])
 
+  // TODO: refactor to combine left and right swipe
   const handleLeftPostSwipe = () => {
-    // if their is a new caption, update the currPostPages arr
-
     const numOfPages = currPostPages.length
 
     if (numOfPages > 1 && currPageNum !== numOfPages) {
       const newPageNum = currPageNum + 1
-      const { content } = currPostPages[currPageNum]
+      const { content, caption } = currPostPages[currPageNum]
+      const currCaptionInputValue = currCaptionInput.current.value
+
+      if (currPageCaption !== currCaptionInputValue) {
+        const newPostPages = currPostPages
+        newPostPages[currPageNum-1].caption = currCaptionInputValue
+        setPages(newPostPages)
+      }
 
       setPageNum(newPageNum)
       setContent(content)
-
-      // if their is a new caption, then i
-      // setCaption(caption)
-      // currPageCaption.current.value = currPostPages[currPageNum - 1].caption
+      setCaption(caption)
+      currCaptionInput.current.value = caption
     }   
   }
 
@@ -53,9 +55,16 @@ const PostEditForm = ({ location, history }) => {
       const newPageNum = currPageNum - 1
       const { content, caption } = currPostPages[newPageNum - 1]
 
+      if (currPageCaption !== currCaptionInputValue) {
+        const newPostPages = currPostPages
+        newPostPages[currPageNum-1].caption = currCaptionInputValue
+        setPages(newPostPages)
+      }
+
       setPageNum(newPageNum)
       setContent(content)
-      currPageCaption.current.value = currPostPages[currPageNum - 1][caption]
+      setCaption(caption)
+      currCaptionInput.current.value = caption
     }
   }
 
@@ -80,7 +89,6 @@ const PostEditForm = ({ location, history }) => {
     :
       <video autoPlay preload='true'
         className='w-100' 
-        // onClick={handlePostPageChange} 
         src={currPageContent}
         type="video/mp4"
       />

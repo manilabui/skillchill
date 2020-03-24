@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { useSwipeable, Swipeable } from 'react-swipeable'
+import { Swipeable } from 'react-swipeable'
 import { getAll } from '../../modules/apiManager'
 import './Post.css'
 
 export default ({ id, skillager, skill, post_type, currPage }) => {
-	const { name, avatar, created_at } = skill
-	const skill_id = skill.id
+	const { name, avatar } = skill
 	const [currPostPages, setPages] = useState([])
 	const [currPageNum, setPageNum] = useState(1)
 	const [currPageContent, setContent] = useState('')
@@ -15,7 +14,7 @@ export default ({ id, skillager, skill, post_type, currPage }) => {
 		getAll(`postpages?post=${id}`)
 			.then(pages => {
 				if (pages.length) {
-					const { content, caption, page_num } = pages[0]
+					const { content, caption } = pages[0]
 					setPages(pages)
 					setContent(content)
 					setCaption(caption)
@@ -51,17 +50,19 @@ export default ({ id, skillager, skill, post_type, currPage }) => {
 		} 
 	}
 
-	const currPostElem = post_type === 'Photo' ? 
-		<img avatar='Post'
-			className='w-100'
-			src={currPageContent}
-		/> :
-		<video autoPlay preload='true'
-			className='w-100' 
-			// onClick={handlePostPageChange} 
-			src={currPageContent}
-			type="video/mp4"
-		/>
+	const currPostElem = post_type === 'Photo' 
+		? 
+			<img alt={name}
+				avatar='Post'
+				className='w-100'
+				src={currPageContent}
+			/> 
+		:
+			<video autoPlay preload='true'
+				className='w-100'
+				src={currPageContent}
+				type="video/mp4"
+			/>
 
 	return (
 		<article>
