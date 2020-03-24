@@ -39,10 +39,9 @@ const PostForm = props => {
     )
   })
 
-  const saveUrl = url => {
-    const newUrls = currContentUrls.concat(url)
+  const saveUrl = async url => {
+    const newUrls = await currContentUrls.concat(url)
     setIds(newUrls)
-    console.log(currContentUrls)
   }
 
   const server = {
@@ -74,9 +73,7 @@ const PostForm = props => {
         () => {
         // Handle successful uploads on complete
           load(id)
-          task.snapshot.ref.getDownloadURL().then(url => {
-            saveUrl(url)
-          })
+          task.snapshot.ref.getDownloadURL().then(url => saveUrl(url))
         }
       )
     }
@@ -90,10 +87,26 @@ const PostForm = props => {
       post_type: 'P',
       is_public: true
     }
-    
+
     postItem('posts', postObj)
-      .then(r => console.log(r))
-    // props.history.push({ pathname: "/postpage/new" })
+      .then(({ id, skill }) => {
+        Promise.all(
+          currContentUrls.map((url, i) => {
+            const postPageObj = {
+              post_id: id,
+              content: url,
+              page_num: i + 1,
+              caption: ''
+            }
+
+            return postItem(`postpages`, postPageObj).then(r => r)
+          })
+        )
+          .then(props.history.push({
+            pathname: '/postpage/edit',
+            state: { post_id: id, skill }
+          }))
+      })
   }
 
   const formInput = <input
@@ -132,15 +145,7 @@ const PostForm = props => {
             }}
           />
         </fieldset>
-        {
-          !currPostSkill && currContentUrls.length
-          ? (
-            <Link to={{
-              pathname: '/postpage/edit',
-              state: { currContentUrls }
-            }}>{formInput}</Link>
-          ) : formInput
-        }   
+        {formInput}   
       </form>
     </main>
   )

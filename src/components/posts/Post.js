@@ -67,9 +67,8 @@ export default ({ id, skillager, skill, post_type }) => {
 	return (
 		<article>
 				<div className='mb1 dib pa2 pt3 inline-flex items-center'>
-				  <img
-				      src={avatar} alt="avatar"
-				      className="br-100 h1 w1 dib" />
+				  <img src={avatar} alt="avatar"
+				    className="br-100 h1 w1 dib" />
 				 	<span className='pl2 f6 fw6 dib'>{name}</span>
 				</div>
 				<div className='w-100'>
@@ -77,7 +76,7 @@ export default ({ id, skillager, skill, post_type }) => {
 					onSwipedLeft={handleLeftPostSwipe}
 					onSwipedRight={handleRightPostSwipe}>
 				  {currPostElem}
-				</Swipeable>	
+				</Swipeable>
 				</div>
 				<h4 className='ph2 f7 fw3'>{currPageCaption}</h4>
 		</article>
