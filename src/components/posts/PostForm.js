@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 import { Link, withRouter } from "react-router-dom"
-import { getAll } from "../../modules/apiManager"
+import { getAll, postItem } from "../../modules/apiManager"
 
 import firebase from '../../modules/firebase';
 import "firebase/storage"
@@ -16,11 +16,15 @@ registerPlugin(
   FilePondPluginImagePreview
 )
 
+const post_draft_content = {ids: []}
+
+localStorage.setItem('post_draft', JSON.stringify(post_draft_content))
+
 const storage = firebase.storage().ref()
 
 const PostForm = ({ onRequestSave }) => {
   const [currUserSkills, setUserSkills] = useState([])
-  const [currFirebaseContentIds, setIds] = useState([])
+  const [currContentIds, setIds] = useState([])
   const [files, setFiles] = useState([])
   const currPostSkill = useRef(null)
   const ref = useRef(null)
@@ -39,6 +43,11 @@ const PostForm = ({ onRequestSave }) => {
     )
   })
 
+  const saveUrl = async url => {
+    const newUrls = await currContentIds.concat(url)
+    setIds(newUrls)
+  }
+
   const server = {
     // this uploads the image using firebase
     process: (fieldName, file, metadata, load, progress, error, abort) => {
@@ -47,34 +56,38 @@ const PostForm = ({ onRequestSave }) => {
 
       // upload the image to firebase
       let task
-      if (file.type === 'image/jpeg') task = storage.child('images/' + id).put(file, {
-        contentType: 'image/jpeg'
-      })
-      else if (file.type === 'video/mp4') task = storage.child('videos/' + id).put(file, {
-        contentType: 'video/mp4'
-      })
+      if (file.type === 'image/jpeg') {
+        task = storage.child('images/' + id).put(file, { contentType: 'image/jpeg' })
+      } else if (file.type === 'video/mp4') {
+        task = storage.child('videos/' + id).put(file, { contentType: 'video/mp4' })
+      }
 
-      task.on(
-        firebase.storage.TaskEvent.STATE_CHANGED,
-          snap => {
-            progress(true, snap.bytesTransferred, snap.totalBytes);
-          },
-          err => {
-            error(err.message);
-          },
-          () => {
-            load(id);
-            onRequestSave(id);
+      task.on('state_changed', 
+        snap => {
+          switch (snap.state) {
+            case 'paused':
+              console.log('Upload is paused')
+              break;
+            case 'running':
+              console.log('Upload is running')
+              break;
           }
-        );
-
-      // load(id)
+        },
+        err => error(err.message), 
+        () => {
+        // Handle successful uploads on complete
+          load(id)
+          task.snapshot.ref.getDownloadURL().then(url => {
+            saveUrl(url)
+          })
+        }
+      )
     }
   }
 
   const handlePostCreation = e => {
+    e.preventDefault()
     // may still post an object to local storage with the references to the urls for the postpages
-    console.log('hellos')
     // props.history.push({ pathname: "/postpage/new" })
   }
 
@@ -99,6 +112,7 @@ const PostForm = ({ onRequestSave }) => {
             files={files}
             server={server}
             maxFiles={5}
+            instantUpload={false}
             allowMultiple={true}
             allowDrop={false}
             allowReorder={true}
@@ -107,11 +121,11 @@ const PostForm = ({ onRequestSave }) => {
             }}
           />
         </fieldset>    
-          <input
-            className="b ph3 pv2 input-reset ba b--black bg-transparent grow f6 dib"
-            type="submit"
-            value="Next"
-          />     
+        <input
+          className="b ph3 pv2 input-reset ba b--black bg-transparent grow f6 dib"
+          type="submit"
+          value="Next"
+        />     
       </form>
     </main>
   )
