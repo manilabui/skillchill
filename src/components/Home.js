@@ -72,7 +72,7 @@ export default props => {
 			<div>
 				<Route render={props => (<TopNav {...props} />)} />
 			</div>
-			<PostList currPosts={currPosts} />
+			<PostList currPosts={currPosts} currPage={currPage} />
 			<div>
 				<Route render={props => (
 					<BottomNav {...props} 

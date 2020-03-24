@@ -3,7 +3,7 @@ import { useSwipeable, Swipeable } from 'react-swipeable'
 import { getAll } from '../../modules/apiManager'
 import './Post.css'
 
-export default ({ id, skillager, skill, post_type }) => {
+export default ({ id, skillager, skill, post_type, currPage }) => {
 	const { name, avatar, created_at } = skill
 	const skill_id = skill.id
 	const [currPostPages, setPages] = useState([])
@@ -70,7 +70,7 @@ export default ({ id, skillager, skill, post_type }) => {
 				    className="br-100 h1 w1 dib" />
 				 	<span className='pl2 f6 fw6 dib'>{name}</span>
 				 {/*
-				 	// show this if the current page is your own profile 
+				 	if (currPage === 'my profile') 
 				 	<span className='pr2 f6 fw6 dib fr'>x</span> 
 				 */}
 				</div>
