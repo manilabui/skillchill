@@ -54,6 +54,7 @@ const PostEditForm = ({ location, history }) => {
     if (numOfPages > 1 && currPageNum > 1) {
       const newPageNum = currPageNum - 1
       const { content, caption } = currPostPages[newPageNum - 1]
+      const currCaptionInputValue = currCaptionInput.current.value
 
       if (currPageCaption !== currCaptionInputValue) {
         const newPostPages = currPostPages
@@ -70,13 +71,32 @@ const PostEditForm = ({ location, history }) => {
 
   const handlePostPublish = e => {
     e.preventDefault()
+
+    const currCaptionInputValue = currCaptionInput.current.value
+
+    if (currPageCaption !== currCaptionInputValue) {
+      const newPostPages = currPostPages
+      newPostPages[currPageNum-1].caption = currCaptionInputValue
+      setPages(newPostPages)
+    }
+
     const postObj = {
       modified_at: null,
       is_public: true
     }
 
-    patchItem('post', post_id, postObj)
+    Promise.all(
+      currPostPages.map(({ id, caption }) => {
+        const postPageObj = {
+          modified_at: null,
+          caption
+        }
+        
+        patchItem('postpages', id, postPageObj)
+      })
+    )
 
+    patchItem('posts', post_id, postObj)
     history.push('/')
   }
 
