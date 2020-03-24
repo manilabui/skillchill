@@ -1,29 +1,26 @@
 import React, { useState, useRef } from "react"
 import { Link, withRouter } from "react-router-dom"
-import { FileUpload } from './FileUpload'
 
-const PostCreateForm = props => {
-  const [image, setImage] = React.useState('');
+import firebase from '../../modules/firebase';
+import "firebase/storage"
+import shortid from 'shortid'
+
+const storage = firebase.storage().ref()
+
+const PostEditForm = props => {
+  const [image, setImage] = useState('')
   const caption = useRef()
 
-  // need a dropdown menu for the userskills
-  // may need to upload the files, and then go create the post pages at the next step
-
-  const handlePostCreation = e => {
+  const handlePostPageCreation = e => {
     e.preventDefault()
-    console.log('hello')
+    console.log('hello hi')
   }
 
   return (
     <main className='pa4 black-80'>
-      <form className="measure center" onSubmit={handlePostCreation}>
+      <form className="measure center" onSubmit={handlePostPageCreation}>
         <fieldset className="ba b--transparent ph0 mh0">
           <legend className="f4 fw6 ph0 mh0">Create Post</legend>
-          <FileUpload
-            onRequestSave={id => setImage(id)}
-            onRequestClear={() => setImage(null)}
-            defaultFiles={[]}
-          />
           <div className="mt3">
             <label className="db fw6 lh-copy f6" htmlFor="caption">
               Caption
@@ -49,4 +46,4 @@ const PostCreateForm = props => {
   )
 }
 
-export default withRouter(PostCreateForm)
+export default withRouter(PostEditForm)

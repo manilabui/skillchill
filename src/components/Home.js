@@ -36,14 +36,14 @@ export default props => {
   }
 
   const getNewsfeedPosts = skillsArr => {
-  	let postsArr = []
-
 		Promise.all(
+			// loop through all the user's followed skills + fetch the posts
 			skillsArr.map(({ skill }) => getAll(`posts?skill=${skill.id}`)))
+				// flatten the array of arrays
 				.then(postArrs =>
 					postArrs.reduce(( prevArr, currArr ) => prevArr.concat(currArr), []))
 				.then(posts => {
-					// TODO: need to order them by date
+					// TODO: order posts by date
 					setPosts(posts)
 				}
 		)
@@ -74,14 +74,14 @@ export default props => {
 			</div>
 			<PostList currPosts={currPosts} />
 			<div>
-			<Route render={props => (
-				<BottomNav {...props} 
-					handlePageChange={handlePageChange}
-					currPage={currPage} 
-					avatar={avatar}
-					userSkills={currUserSkills}
-				/>)}
-			/>
+				<Route render={props => (
+					<BottomNav {...props} 
+						handlePageChange={handlePageChange}
+						currPage={currPage} 
+						avatar={avatar}
+						userSkills={currUserSkills}
+					/>)}
+				/>
 			</div>
 		</Fragment>
 	)

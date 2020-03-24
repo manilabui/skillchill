@@ -1,8 +1,3 @@
-import firebase from "firebase/app";
-import { firebaseConfig } from "./apiKey"
-
-firebase.initializeApp(firebaseConfig);
-
 const remoteURL = 'http://localhost:8000'
 
 const headers = {
