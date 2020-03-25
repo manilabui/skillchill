@@ -4,12 +4,30 @@ import { getAll } from '../../modules/apiManager'
 import { toLower } from 'lodash'
 
 export default props => {
-	const [allSkills, setSkills] = useState([])
+	const [skills, setSkills] = useState([])
 	const [searchResults, setResults] = useState([])
 	const searchInput = useRef()
 
-	const getAllSkills = () => {
-		getAll('skills').then(skills => setSkills(skills))
+	const getCurrUserSkills = () => {
+    getAll("userskills")
+      .then(skills => setUserSkills(skills))
+  }
+
+	const getAllSkills = () => { 
+		getAll('skills').then(skills => {
+			setSkills(skills)
+		})
+	}
+
+	const getFilteredSkills = () => {
+		getAll('skills')
+			.then(allSkills => {
+				getAll("userskills")
+					.then(userSkills => {
+						// do filtering here
+						const 
+					})
+			})
 	}
 
 	useEffect(getAllSkills, [])
