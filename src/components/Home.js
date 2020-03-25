@@ -73,6 +73,7 @@ export default props => {
 				<Route render={props => (<TopNav {...props} />)} />
 			</div>
 			<PostList currPosts={currPosts} currPage={currPage} />
+			{ currPage === 'post' ? console.log("post") : null }
 			<div>
 				<Route render={props => (
 					<BottomNav {...props} 
