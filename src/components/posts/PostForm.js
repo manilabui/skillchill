@@ -136,6 +136,7 @@ const PostForm = props => {
             files={files}
             server={server}
             maxFiles={5}
+            labelIdle='<span class="filepond--label-action"> Browse </span>'
             instantUpload={false}
             allowMultiple={true}
             allowDrop={false}
