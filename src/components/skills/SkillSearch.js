@@ -8,7 +8,9 @@ export default props => {
 	const [searchResults, setResults] = useState([])
 	const searchInput = useRef()
 
-	const getAllSkills = () => getAll('skills').then(skills => setSkills(skills))
+	const getAllSkills = () => {
+		getAll('skills').then(skills => setSkills(skills))
+	}
 
 	useEffect(getAllSkills, [])
 
@@ -19,9 +21,9 @@ export default props => {
     setResults(results)
   }
 
-  const searchResultsItems = searchResults.map(({ name, avatar }) => {
+  const searchResultsItems = searchResults.map(({ id, name, avatar }) => {
   	return (
-  		<div className='mb1 pa2 pt3 inline-flex items-center'>
+  		<div key={id} className='mb1 pa2 pt3 inline-flex items-center'>
 	      <img src={avatar} alt="avatar" className="br-100 h1 w1 dib" />
 	      <span className='pl2 f6 fw6 dib'>{name}</span>
     	</div>
@@ -30,6 +32,7 @@ export default props => {
 
 	return (
 		<main className='pa4 black-80'>
+			<Link to='/'><div className="orange fr f4 fw3">x</div></Link>
 			<label className="f4 fw6 ph0 mh0" htmlFor='search'>Search skill</label>
 			<input
         className="center mt3 pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
