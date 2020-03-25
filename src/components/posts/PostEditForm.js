@@ -26,6 +26,16 @@ const PostEditForm = ({ location, history }) => {
 
   useEffect(getCurrPostPages, [])
 
+  const updateCaptionFromInput = () => {
+    const currCaptionInputValue = currCaptionInput.current.value
+
+    if (currPageCaption !== currCaptionInputValue) {
+      const newPostPages = currPostPages
+      newPostPages[currPageNum-1].caption = currCaptionInputValue
+      setPages(newPostPages)
+    }
+  }
+
   // TODO: refactor to combine left and right swipe
   const handleLeftPostSwipe = () => {
     const numOfPages = currPostPages.length
@@ -33,14 +43,8 @@ const PostEditForm = ({ location, history }) => {
     if (numOfPages > 1 && currPageNum !== numOfPages) {
       const newPageNum = currPageNum + 1
       const { content, caption } = currPostPages[currPageNum]
-      const currCaptionInputValue = currCaptionInput.current.value
-
-      if (currPageCaption !== currCaptionInputValue) {
-        const newPostPages = currPostPages
-        newPostPages[currPageNum-1].caption = currCaptionInputValue
-        setPages(newPostPages)
-      }
-
+      
+      updateCaptionFromInput()
       setPageNum(newPageNum)
       setContent(content)
       setCaption(caption)
@@ -54,14 +58,8 @@ const PostEditForm = ({ location, history }) => {
     if (numOfPages > 1 && currPageNum > 1) {
       const newPageNum = currPageNum - 1
       const { content, caption } = currPostPages[newPageNum - 1]
-      const currCaptionInputValue = currCaptionInput.current.value
 
-      if (currPageCaption !== currCaptionInputValue) {
-        const newPostPages = currPostPages
-        newPostPages[currPageNum-1].caption = currCaptionInputValue
-        setPages(newPostPages)
-      }
-
+      updateCaptionFromInput()
       setPageNum(newPageNum)
       setContent(content)
       setCaption(caption)
@@ -72,18 +70,7 @@ const PostEditForm = ({ location, history }) => {
   const handlePostPublish = e => {
     e.preventDefault()
 
-    const currCaptionInputValue = currCaptionInput.current.value
-
-    if (currPageCaption !== currCaptionInputValue) {
-      const newPostPages = currPostPages
-      newPostPages[currPageNum-1].caption = currCaptionInputValue
-      setPages(newPostPages)
-    }
-
-    const postObj = {
-      modified_at: null,
-      is_public: true
-    }
+    updateCaptionFromInput()
 
     Promise.all(
       currPostPages.map(({ id, caption }) => {
@@ -93,8 +80,14 @@ const PostEditForm = ({ location, history }) => {
         }
         
         patchItem('postpages', id, postPageObj)
+        return postPageObj
       })
     )
+
+    const postObj = {
+      modified_at: null,
+      is_public: true
+    }
 
     patchItem('posts', post_id, postObj)
     history.push('/')
@@ -102,7 +95,8 @@ const PostEditForm = ({ location, history }) => {
 
   const currPostElem = post_type === 'Photo'
     ? 
-      <img avatar='Post'
+      <img alt={name} 
+        avatar='Post'
         className='w-100'
         src={currPageContent}
       /> 
