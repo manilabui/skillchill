@@ -1,29 +1,50 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link } from "react-router-dom"
-import { getAll } from '../../modules/apiManager'
+import { getAll, postItem } from '../../modules/apiManager'
 import { toLower } from 'lodash'
 
 export default props => {
-	const [allSkills, setSkills] = useState([])
+	const [skills, setSkills] = useState([])
 	const [searchResults, setResults] = useState([])
 	const searchInput = useRef()
 
-	const getAllSkills = () => {
-		getAll('skills').then(skills => setSkills(skills))
+	// filter out skills the user is already following
+	const getFilteredSkills = () => {
+		getAll('skills')
+			.then(async allSkills => {
+				const userSkills = await getAll("userskills")
+				const userSkillIds = userSkills.map(({ skill }) => skill.id)
+				const filteredSkills = allSkills.filter(({ id }) => !userSkillIds.includes(id))
+
+				setSkills(filteredSkills)
+			})
 	}
 
-	useEffect(getAllSkills, [])
+	useEffect(getFilteredSkills, [])
 
 	const getSearchResults = () => {
     const userInput = toLower(searchInput.current.value)
-    const results = allSkills.filter(({ name }) => toLower(name).includes(userInput))
+    const results = skills.filter(({ name }) => toLower(name).includes(userInput))
     
     setResults(results)
   }
 
+  const handleSkillClick = (id, name) => {
+  	const skillFollowConfirmed = window.confirm(`Would you like to follow ${name}?`)
+  	const userSkillObj = {
+  		skill_id: id,
+  		is_moderator: false
+  	}
+
+  	if (skillFollowConfirmed) postItem('userskills', userSkillObj)
+  }
+
   const searchResultsItems = searchResults.map(({ id, name, avatar }) => {
   	return (
-  		<div key={id} className='mb1 pa2 pt3 inline-flex items-center'>
+  		<div key={id} 
+  			className='mb1 pa2 pt3 inline-flex items-center'
+  			onClick={() => handleSkillClick(id, name)}
+  		>
 	      <img src={avatar} alt="avatar" className="br-100 h1 w1 dib" />
 	      <span className='pl2 f6 fw6 dib'>{name}</span>
     	</div>
@@ -40,7 +61,7 @@ export default props => {
         id="search"
         ref={searchInput}
         onChange={getSearchResults}
-        autoComplete="on"
+        autoComplete="off"
         autoFocus="on"
         placeholder=""
       />
