@@ -8,40 +8,36 @@ export default props => {
 	const [searchResults, setResults] = useState([])
 	const searchInput = useRef()
 
-	const getCurrUserSkills = () => {
-    getAll("userskills")
-      .then(skills => setUserSkills(skills))
-  }
-
-	const getAllSkills = () => { 
-		getAll('skills').then(skills => {
-			setSkills(skills)
-		})
-	}
-
 	const getFilteredSkills = () => {
 		getAll('skills')
-			.then(allSkills => {
-				getAll("userskills")
-					.then(userSkills => {
-						// do filtering here
-						const 
-					})
+			.then(async allSkills => {
+				const userSkills = await getAll("userskills")
+				const userSkillIds = userSkills.map(({ skill }) => skill.id)
+				const filteredSkills = allSkills.filter(({ id }) => !userSkillIds.includes(id))
+
+				setSkills(filteredSkills)
 			})
 	}
 
-	useEffect(getAllSkills, [])
+	useEffect(getFilteredSkills, [])
 
 	const getSearchResults = () => {
     const userInput = toLower(searchInput.current.value)
-    const results = allSkills.filter(({ name }) => toLower(name).includes(userInput))
+    const results = skills.filter(({ name }) => toLower(name).includes(userInput))
     
     setResults(results)
   }
 
+  const handleSkillClick = id => {
+  	console.log(id)
+  }
+
   const searchResultsItems = searchResults.map(({ id, name, avatar }) => {
   	return (
-  		<div key={id} className='mb1 pa2 pt3 inline-flex items-center'>
+  		<div key={id} 
+  			className='mb1 pa2 pt3 inline-flex items-center'
+  			onClick={() => handleSkillClick(id)}
+  		>
 	      <img src={avatar} alt="avatar" className="br-100 h1 w1 dib" />
 	      <span className='pl2 f6 fw6 dib'>{name}</span>
     	</div>
