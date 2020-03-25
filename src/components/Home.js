@@ -5,7 +5,7 @@ import { getAll } from "../modules/apiManager"
 import TopNav from "./nav/TopNav"
 import BottomNav from "./nav/BottomNav"
 import Profile from "./profile/Profile"
-import PostList from "./newsfeed/PostList"
+import PostList from "./posts/PostList"
 
 export default props => {
 	const { isAuthenticated } = useAuth()
@@ -36,15 +36,17 @@ export default props => {
   }
 
   const getNewsfeedPosts = skillsArr => {
-  	let postsArr = []
-
-  	// BUG: not pulling all posts from the skills the user is following 
-  	// Should I be doing this in the backend?
-		skillsArr.reduce( async (prevPromise, { skill }) => {
-		  await prevPromise
-		  return getAll(`posts?skill=${skill.id}`)
-		}, Promise.resolve())
-			.then(posts => setPosts(posts))
+		Promise.all(
+			// loop through all the user's followed skills + fetch the posts
+			skillsArr.map(({ skill }) => getAll(`posts?skill=${skill.id}`)))
+				// flatten the array of arrays
+				.then(postArrs =>
+					postArrs.reduce(( prevArr, currArr ) => prevArr.concat(currArr), []))
+				.then(posts => {
+					// TODO: order posts by date & remove your own posts
+					setPosts(posts)
+				}
+		)
   }
 
 	const getCurrUserSkills = () => {
@@ -65,22 +67,21 @@ export default props => {
 		if (newPage === 'newsfeed') getNewsfeedPosts(currUserSkills)
 	}
 
-	// const postsArr = posts.map(post => <PostCard>)
-
 	return (
 		<Fragment>
 			<div>
 				<Route render={props => (<TopNav {...props} />)} />
 			</div>
-			<PostList currPosts={currPosts} />
+			<PostList currPosts={currPosts} currPage={currPage} />
 			<div>
-			<Route render={props => (
-				<BottomNav {...props} 
-					handlePageChange={handlePageChange}
-					currPage={currPage} 
-					avatar={avatar}
-				/>)}
-			/>
+				<Route render={props => (
+					<BottomNav {...props} 
+						handlePageChange={handlePageChange}
+						currPage={currPage} 
+						avatar={avatar}
+						userSkills={currUserSkills}
+					/>)}
+				/>
 			</div>
 		</Fragment>
 	)
