@@ -5,11 +5,10 @@ import Login from "./auth/Login"
 import Home from "./Home"
 import PostForm from "./posts/PostForm"
 import PostEditForm from "./posts/PostEditForm"
+import SkillSearch from "./skills/SkillSearch"
+import SkillForm from "./skills/SkillForm"
 
 const ApplicationViews = props => {
-
-	// TODO: may add a search route (for skillage search page)
-
   return (
     <div className="avenir">
       <Route exact path="/" render={props => (<Home {...props} />)} />
@@ -17,6 +16,8 @@ const ApplicationViews = props => {
       <Route path="/login" render={props => (<Login {...props} />)} />
       <Route path="/post/new" render={props => (<PostForm {...props} />)} />
       <Route path="/postpage/edit" render={props => (<PostEditForm {...props} />)} />
+      <Route path="/skill/new" render={props => (<SkillForm {...props} />)} />
+      <Route path="/search/skills" render={props => (<SkillSearch {...props} />)} />
     </div>
   )
 }
