@@ -13,10 +13,9 @@ const SkillForm = props => {
   		name: name.current.value,
   		avatar: 'http://placeimg.com/200/200/any'
   	}
-
+    // TODO: prevent creating duplicate skill. prompt user if it's a dupe.
   	postItem('skills', skillObj)
   		.then(skill => {
-  			console.log('new skill', skill.name)
   			const userSkillObj = {
   				skill_id: skill.id,
   				is_moderator: true
