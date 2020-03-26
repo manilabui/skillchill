@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link } from "react-router-dom"
 import { getAll, postItem } from '../../modules/apiManager'
-// import { toLower } from 'lodash'
+import { toLower } from 'lodash'
 
 export default props => {
 	const [skills, setSkills] = useState([])
@@ -23,8 +23,8 @@ export default props => {
 	useEffect(getFilteredSkills, [])
 
 	const getSearchResults = () => {
-    const userInput = searchInput.current.value.toLowerCase()
-    const results = skills.filter(({ name }) => name.toLowerCase().includes(userInput))
+    const userInput = toLower(searchInput.current.value)
+    const results = skills.filter(({ name }) => toLower(name).includes(userInput))
     
     setResults(results)
   }
