@@ -4,7 +4,7 @@ import { Route } from "react-router-dom"
 import { getAll } from "../modules/apiManager"
 import TopNav from "./nav/TopNav"
 import BottomNav from "./nav/BottomNav"
-import Profile from "./profile/Profile"
+// import Profile from "./profile/Profile"
 import PostList from "./posts/PostList"
 
 export default props => {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { ReactComponent as CommentIcon } from '../../assets/mdi_mode_comment.svg'
 import { Swipeable } from 'react-swipeable'
 import { getAll } from '../../modules/apiManager'
 import './Post.css'
@@ -82,7 +83,8 @@ export default ({ id, skillager, skill, post_type, currPage }) => {
 				  {currPostElem}
 				</Swipeable>
 				</div>
-				<h4 className='ph2 f7 fw3'>{currPageCaption}</h4>
+				<div className='pa2 f7 fw3 dib'>{currPageCaption}</div>
+				<CommentIcon className='pa1 dib fr'/>
 		</article>
 	)
 }
