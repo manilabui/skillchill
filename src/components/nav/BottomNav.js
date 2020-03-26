@@ -11,9 +11,6 @@ export default ({ currPage, handlePageChange, avatar, userSkills }) => {
 	const handleMenuDisplay = () =>
 		showMenu ? setMenuDisplay(false) : setMenuDisplay(true);
 
-	// TODO: fetch call to get all the user skills.
-	// the user's newsfeed should be part of this list (maybe make the newsfeed a stretch.)
-
 	const menu = () => {
 		const menuItems = userSkills.map(({ skill }, i) => {
 			const { id, name, avatar } = skill
