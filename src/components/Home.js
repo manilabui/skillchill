@@ -80,6 +80,7 @@ export default props => {
 				currPosts={currPosts}
 				currPage={currPage}
 				handlePageChange={handlePageChange}
+				getCurrPosts={getCurrPosts}
 				avatar={avatar}
 				userInfo={userInfo}
 				{...props}
@@ -88,11 +89,11 @@ export default props => {
 				<Route
 					render={props => (
 						<BottomNav
-							{...props}
 							handlePageChange={handlePageChange}
 							currPage={currPage}
 							avatar={avatar}
 							userSkills={currUserSkills}
+							{...props}
 						/>
 					)}
 				/>

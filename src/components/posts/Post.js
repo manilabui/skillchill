@@ -13,9 +13,9 @@ export default ({
 	post_type,
 	currPage,
 	handlePageChange,
+	getCurrPosts,
 	userInfo,
-	userAvatar,
-	history
+	userAvatar
 }) => {
 	const { name, avatar } = skill;
 	const username = skillager.user.username;
@@ -64,7 +64,8 @@ export default ({
 	};
 
 	const handleDeleteClick = () => {
-		deleteItem("posts", id).then(history.push({ pathname: "/" }));
+		deleteItem("posts", id)
+			.then(() => getCurrPosts("skillager", skillager.id))
 	};
 
 	const handleCommentClick = () => {

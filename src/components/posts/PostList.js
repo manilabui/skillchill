@@ -5,9 +5,9 @@ export default ({
 	currPosts,
 	currPage,
 	handlePageChange,
+	getCurrPosts,
 	userInfo,
-	avatar,
-	history
+	avatar
 }) => {
 	const postArr = currPosts.map(post => {
 		return (
@@ -15,9 +15,9 @@ export default ({
 				key={post.id}
 				currPage={currPage}
 				handlePageChange={handlePageChange}
+				getCurrPosts={getCurrPosts}
 				userAvatar={avatar}
 				userInfo={userInfo}
-				history={history}
 				{...post}
 			/>
 		);
