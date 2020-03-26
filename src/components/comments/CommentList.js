@@ -12,8 +12,11 @@ export default ({ post_id, comments, getComments }) => {
 		};
 
 		postItem("comments", commentObj)
-			.then(() => getComments())
-			.then(commentInput.current.value === null);
+			.then(() => {
+				getComments()
+			})
+
+		commentInput.current.value = ''
 	};
 
 	const commentArr = comments.map((comment, i) => {
