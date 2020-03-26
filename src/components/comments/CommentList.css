@@ -1,0 +1,13 @@
+.comment-list {
+	margin-bottom: 20px;
+}
+
+.comment-input {
+	margin-bottom: 20px;
+	width: 97%;
+}
+
+hr {
+	border: 0.5px dotted;
+	opacity: 0.2;
+}
