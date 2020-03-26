@@ -11,12 +11,11 @@ export default ({ post_id, comments, getComments }) => {
 			post_id
 		};
 
-		postItem("comments", commentObj)
-			.then(() => {
-				getComments()
-			})
+		postItem("comments", commentObj).then(() => {
+			getComments();
+		});
 
-		commentInput.current.value = ''
+		commentInput.current.value = "";
 	};
 
 	const commentArr = comments.map((comment, i) => {
