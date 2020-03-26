@@ -8,7 +8,7 @@ import BottomNav from "./nav/BottomNav";
 import PostList from "./posts/PostList";
 
 export default props => {
-	const { isAuthenticated } = useAuth();
+	const { logout } = useAuth()
 	const [skillagerId, setId] = useState("");
 	const [userInfo, setUserInfo] = useState({});
 	const [avatar, setAvatar] = useState("http://tachyons.io/img/logo.jpg");
@@ -17,16 +17,14 @@ export default props => {
 	const [currUserSkills, setUserSkills] = useState([]);
 
 	const getCurrSkillager = () => {
-		if (isAuthenticated()) {
-			getAll("skillagers").then(skillagers => {
-				const skillager = skillagers[0];
-				const { id, user, avatar } = skillager;
-
-				setId(id);
-				setAvatar(avatar);
-				setUserInfo(user);
-			});
-		}
+		getAll("skillagers").then(skillagers => {
+			const skillager = skillagers[0];
+			const { id, user, avatar } = skillager;
+			
+			setId(id);
+			setAvatar(avatar);
+			setUserInfo(user);
+		});
 	};
 
 	const getCurrPosts = (filter, id) => {
@@ -49,12 +47,10 @@ export default props => {
 	};
 
 	const getCurrUserSkills = () => {
-		if (isAuthenticated()) {
-			getAll("userskills").then(skills => {
-				setUserSkills(skills);
-				getNewsfeedPosts(skills);
-			});
-		}
+		getAll("userskills").then(skills => {
+			setUserSkills(skills);
+			getNewsfeedPosts(skills);
+		});
 	};
 
 	useEffect(getCurrSkillager, []);
@@ -73,10 +69,17 @@ export default props => {
 		if (newPage === "post") setPosts([postOrSkill]);
 	};
 
+	const handleLogout = () => {
+		logout()
+		props.history.push({ pathname: "/login" });
+		setId('')
+		// TODO: display affordance to log out
+	};
+
 	return (
 		<Fragment>
 			<div>
-				<Route render={props => <TopNav {...props} />} />
+				<Route render={props => <TopNav handleLogout={handleLogout} {...props} />} />
 			</div>
 			<PostList
 				currPosts={currPosts}
