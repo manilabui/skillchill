@@ -81,6 +81,7 @@ export default props => {
 				handlePageChange={handlePageChange}
 				avatar={avatar}
 				userInfo={userInfo}
+				{...props}
 			/>
 			<div>
 				<Route

@@ -7,7 +7,7 @@ export default ({ post_id }) => {
 	const commentInput = useRef();
 
 	const getComments = () => {
-		getAll(`comments?post=${post_id}`).then(comments => setComments(comments));
+		getAll(`comments?post=${post_id}`).then(comments => {setComments(comments)});
 	};
 
 	useEffect(getComments, []);

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { ReactComponent as CommentIcon } from "../../assets/mdi_mode_comment.svg";
+import { ReactComponent as DeleteIcon } from "../../assets/icon_close.svg";
 import { Swipeable } from "react-swipeable";
-import { getAll, getItem } from "../../modules/apiManager";
+import { getAll, getItem, deleteItem } from "../../modules/apiManager";
 import CommentList from "../comments/CommentList";
 import "./Post.css";
 
@@ -13,7 +14,8 @@ export default ({
 	currPage,
 	handlePageChange,
 	userInfo,
-	userAvatar
+	userAvatar,
+	history
 }) => {
 	const { name, avatar } = skill;
 	const username = skillager.user.username;
@@ -61,6 +63,11 @@ export default ({
 		}
 	};
 
+	const handleDeleteClick = () => {
+		deleteItem('posts', id)
+			.then(history.push({ pathname: "/" }))
+	}
+
 	const handleCommentClick = () => {
 		getItem("posts", id)
 			.then(post => handlePageChange("post", post))
@@ -81,13 +88,17 @@ export default ({
 
 	return (
 		<article>
-			<div className="mb1 dib pa2 pt3 inline-flex items-center">
-				<img src={avatar} alt="avatar" className="br-100 h1 w1 dib" />
-				<span className="pl2 f6 fw6 dib">{name}</span>
-				{/*
-				 	if (currPage === 'my profile') 
-				 	<span className='pr2 f6 fw6 dib fr'>x</span> 
-				 */}
+			<div className="mb1 dib pa2 pt3 inline-flex items-center w-100">
+				<div className='dib w-90 inline-flex items-center'>
+					<img src={avatar} alt="avatar" className="br-100 h1 w1 dib" />
+					<span className="pl2 f6 fw6 dib">{name}</span>
+				</div>
+				{currPage === 'my profile' ? (
+				 	<DeleteIcon 
+				 		className='pl6 f6 fw6 fr w-10' 
+				 		onClick={handleDeleteClick}
+				 	/>
+				) : null}
 			</div>
 			<div className="w-100">
 				<Swipeable
