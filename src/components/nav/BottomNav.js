@@ -12,11 +12,11 @@ export default ({ currPage, handlePageChange, avatar, userSkills }) => {
 		showMenu ? setMenuDisplay(false) : setMenuDisplay(true);
 
 	const menu = () => {
-		const menuItems = userSkills.map(({ skill }, i) => {
+		const menuItems = userSkills.map(({ skill }) => {
 			const { id, name, avatar } = skill
 
 			return (
-				<li key={i} 
+				<li key={id} 
 					className="pa2 b--orange dib inline-flex items-center"
 					onClick={() => handlePageChange("skill", skill)}
 				>

@@ -1,5 +1,4 @@
 import React from "react";
-import { ReactComponent as SearchIcon } from "../../assets/icon_search.svg";
 import { Link } from "react-router-dom";
 import "./TopNav.css";
 
