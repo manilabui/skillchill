@@ -3,7 +3,7 @@ import { Link, withRouter } from "react-router-dom"
 import { postItem } from "../../modules/apiManager"
 
 const SkillForm = props => {
-	const name = useRef()
+	const name = useRef();
   const avatar = useRef()
 
   const handleSkillCreation = e => {
