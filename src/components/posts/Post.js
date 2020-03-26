@@ -64,13 +64,11 @@ export default ({
 	};
 
 	const handleDeleteClick = () => {
-		deleteItem('posts', id)
-			.then(history.push({ pathname: "/" }))
-	}
+		deleteItem("posts", id).then(history.push({ pathname: "/" }));
+	};
 
 	const handleCommentClick = () => {
-		getItem("posts", id)
-			.then(post => handlePageChange("post", post))
+		getItem("posts", id).then(post => handlePageChange("post", post));
 	};
 
 	const currPostElem =
@@ -89,15 +87,15 @@ export default ({
 	return (
 		<article>
 			<div className="mb1 dib pa2 pt3 inline-flex items-center w-100">
-				<div className='dib w-90 inline-flex items-center'>
+				<div className="dib w-90 inline-flex items-center">
 					<img src={avatar} alt="avatar" className="br-100 h1 w1 dib" />
 					<span className="pl2 f6 fw6 dib">{name}</span>
 				</div>
-				{currPage === 'my profile' ? (
-				 	<DeleteIcon 
-				 		className='pl6 f6 fw6 fr w-10' 
-				 		onClick={handleDeleteClick}
-				 	/>
+				{currPage === "my profile" ? (
+					<DeleteIcon
+						className="pl6 f6 fw6 fr w-10"
+						onClick={handleDeleteClick}
+					/>
 				) : null}
 			</div>
 			<div className="w-100">
@@ -115,11 +113,7 @@ export default ({
 				{currPageCaption}
 			</div>
 			<CommentIcon className="pa1 dib fr z-1" onClick={handleCommentClick} />
-			{currPage === "post" ? (
-				<CommentList
-					post_id={id}
-				/>
-			) : null}
+			{currPage === "post" ? <CommentList post_id={id} /> : null}
 		</article>
 	);
 };
