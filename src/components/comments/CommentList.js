@@ -16,12 +16,10 @@ export default ({ post_id }) => {
 		const { content, skillager } = comment;
 
 		return (
-			<div key={i}>
-				<p>
-					<span className="fw6 pr2">{skillager.user.username}</span>
-					{content}
-				</p>
-			</div>
+			<p key={i}>
+				<span className="fw6 pr2">{skillager.user.username}</span>
+				{content}
+			</p>
 		);
 	});
 
