@@ -1,5 +1,5 @@
 import React, { Fragment, useRef } from "react";
-import { getAll, postItem } from "../../modules/apiManager";
+import { postItem } from "../../modules/apiManager";
 import "./CommentList.css";
 
 export default ({ post_id, comments, getComments }) => {
