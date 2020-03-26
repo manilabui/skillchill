@@ -1,18 +1,25 @@
-import React, { Fragment, useState, useEffect, useRef } from "react";
-import { getAll, postItem } from "../../modules/apiManager";
+import React, { Fragment, useRef } from "react";
+import { postItem } from "../../modules/apiManager";
 import "./CommentList.css";
 
-export default ({ post_id }) => {
-	const [currComments, setComments] = useState([]);
+export default ({ post_id, comments, getComments }) => {
 	const commentInput = useRef();
 
-	const getComments = () => {
-		getAll(`comments?post=${post_id}`).then(comments => {setComments(comments)});
+	const handleCommentPost = () => {
+		const commentObj = {
+			content: commentInput.current.value,
+			post_id
+		};
+
+		postItem("comments", commentObj)
+			.then(() => {
+				getComments()
+			})
+
+		commentInput.current.value = ''
 	};
 
-	useEffect(getComments, []);
-
-	const commentArr = currComments.map((comment, i) => {
+	const commentArr = comments.map((comment, i) => {
 		const { content, skillager } = comment;
 
 		return (
@@ -22,17 +29,6 @@ export default ({ post_id }) => {
 			</p>
 		);
 	});
-
-	const handleCommentPost = () => {
-		const commentObj = {
-			content: commentInput.current.value,
-			post_id
-		};
-
-		postItem("comments", commentObj)
-			.then(getComments())
-			.then(commentInput.current.value === null);
-	};
 
 	return (
 		<Fragment>

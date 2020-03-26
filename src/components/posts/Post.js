@@ -23,6 +23,7 @@ export default ({
 	const [currPageNum, setPageNum] = useState(1);
 	const [currPageContent, setContent] = useState("");
 	const [currPageCaption, setCaption] = useState("");
+	const [currComments, setComments] = useState([]);
 
 	const getCurrPostPages = () => {
 		getAll(`postpages?post=${id}`).then(pages => {
@@ -36,6 +37,12 @@ export default ({
 	};
 
 	useEffect(getCurrPostPages, []);
+
+	const getComments = () => {
+		getAll(`comments?post=${id}`).then(comments => {
+			setComments(comments);
+		});
+	};
 
 	const handleLeftPostSwipe = () => {
 		const numOfPages = currPostPages.length;
@@ -64,12 +71,15 @@ export default ({
 	};
 
 	const handleDeleteClick = () => {
-		deleteItem("posts", id)
-			.then(() => getCurrPosts("skillager", skillager.id))
+		deleteItem("posts", id).then(() => getCurrPosts("skillager", skillager.id));
 	};
 
 	const handleCommentClick = () => {
-		getItem("posts", id).then(post => handlePageChange("post", post));
+		getItem("posts", id)
+			.then(post => {
+				handlePageChange("post", post);
+			})
+			.then(getComments());
 	};
 
 	const currPostElem =
@@ -114,7 +124,13 @@ export default ({
 				{currPageCaption}
 			</div>
 			<CommentIcon className="pa1 dib fr z-1" onClick={handleCommentClick} />
-			{currPage === "post" ? <CommentList post_id={id} /> : null}
+			{currPage === "post" ? (
+				<CommentList
+					post_id={id}
+					comments={currComments}
+					getComments={getComments}
+				/>
+			) : null}
 		</article>
 	);
 };
