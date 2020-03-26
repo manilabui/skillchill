@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { ReactComponent as CommentIcon } from '../../assets/mdi_mode_comment.svg'
 import { Swipeable } from 'react-swipeable'
-import { getAll } from '../../modules/apiManager'
+import { getAll, getItem } from '../../modules/apiManager'
 import './Post.css'
 
-export default ({ id, skillager, skill, post_type, currPage }) => {
+export default ({ id, skillager, skill, post_type, currPage, handlePageChange }) => {
 	const { name, avatar } = skill
 	const [currPostPages, setPages] = useState([])
 	const [currPageNum, setPageNum] = useState(1)
@@ -51,6 +51,11 @@ export default ({ id, skillager, skill, post_type, currPage }) => {
 		} 
 	}
 
+	const handleCommentClick = () => {
+		getItem('posts', id)
+			.then(post => handlePageChange('post', post))
+	}
+
 	const currPostElem = post_type === 'Photo' 
 		? 
 			<img alt={name}
@@ -83,8 +88,11 @@ export default ({ id, skillager, skill, post_type, currPage }) => {
 				  {currPostElem}
 				</Swipeable>
 				</div>
-				<div className='pa2 f7 fw3 dib'>{currPageCaption}</div>
-				<CommentIcon className='pa1 dib fr'/>
+				<div className='pa2 f7 fw3 dib'>
+					{currPage !== 'my profile' ? skillager.username : null}
+					{currPageCaption}
+				</div>
+				<CommentIcon className='pa1 dib fr z-1' onClick={handleCommentClick} />
 		</article>
 	)
 }

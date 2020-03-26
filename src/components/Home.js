@@ -12,7 +12,7 @@ export default props => {
 	const [skillagerId, setId] = useState('')
 	const [userInfo, setUserInfo] = useState({})
 	const [avatar, setAvatar] = useState('http://tachyons.io/img/logo.jpg')
-	const [currPage, setPage] = useState('my profile') // or my profile/skill/post/profile/search
+	const [currPage, setPage] = useState('newsfeed')
 	const [currPosts, setPosts] = useState([])
 	const [currUserSkills, setUserSkills] = useState([])
 
@@ -60,11 +60,16 @@ export default props => {
   useEffect(getCurrSkillager, [])
   useEffect(getCurrUserSkills, [])
 
-	const handlePageChange = newPage => {
-		setPage(newPage)
+	const handlePageChange = (newPage, postOrSkill) => {
+		// TODO: pass in skill obj with name + id
+		if (newPage === 'skill') {
+			setPage(postOrSkill)
+			// get only posts related to the skill
+		} else setPage(newPage)
 
 		if (newPage === 'my profile') getCurrPosts('skillager', skillagerId)
 		if (newPage === 'newsfeed') getNewsfeedPosts(currUserSkills)
+		if (newPage === 'post') setPosts([postOrSkill])
 	}
 
 	return (
@@ -72,8 +77,7 @@ export default props => {
 			<div>
 				<Route render={props => (<TopNav {...props} />)} />
 			</div>
-			<PostList currPosts={currPosts} currPage={currPage} />
-			{ currPage === 'post' ? console.log("post") : null }
+			<PostList currPosts={currPosts} currPage={currPage} handlePageChange={handlePageChange} />
 			<div>
 				<Route render={props => (
 					<BottomNav {...props} 
