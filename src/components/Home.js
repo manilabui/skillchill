@@ -49,10 +49,12 @@ export default props => {
 	};
 
 	const getCurrUserSkills = () => {
-		getAll("userskills").then(skills => {
-			setUserSkills(skills);
-			getNewsfeedPosts(skills);
-		});
+		if (isAuthenticated()) {
+			getAll("userskills").then(skills => {
+				setUserSkills(skills);
+				getNewsfeedPosts(skills);
+			});
+		}
 	};
 
 	useEffect(getCurrSkillager, []);

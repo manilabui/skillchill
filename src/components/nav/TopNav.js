@@ -1,11 +1,15 @@
 import React from "react";
 import { ReactComponent as SearchIcon } from "../../assets/icon_search.svg";
 import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 import "./TopNav.css";
 
-export default () => {
+export default props => {
+	const { logout } = useAuth()
+
 	const handleLogoClick = () => {
-		console.log("click");
+		logout()
+		props.history.push({ pathname: "/" });
 		// TODO: display affordance to log out
 	};
 
