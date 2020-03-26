@@ -11,22 +11,23 @@ export default ({ currPage, handlePageChange, avatar, userSkills }) => {
 	const handleMenuDisplay = () =>
 		showMenu ? setMenuDisplay(false) : setMenuDisplay(true);
 
-	// TODO: fetch call to get all the user skills.
-	// the user's newsfeed should be part of this list (maybe make the newsfeed a stretch.)
-
 	const menu = () => {
 		const menuItems = userSkills.map(({ skill }, i) => {
-			const { id, name } = skill
+			const { id, name, avatar } = skill
 
 			return (
-				<li key={i} className="pa2 bb b--orange">
-					{name}
+				<li key={i} 
+					className="pa2 b--orange dib inline-flex items-center"
+					onClick={() => handlePageChange("skill", skill)}
+				>
+					<img src={avatar} alt="avatar" className="br-100 h1 w1 dib" />
+					<span className="pl2 f6 fw6 dib">{name}</span>
 				</li>
 			);
 		});
 
 		return (
-			<ul className="page-menu f6 fw4 list pl0 ml3 center mw5 ba bg-white b--orange br3 bottom-2 fixed z-1">
+			<ul className="page-menu f6 fw4 list pl0 ml3 center mw5 ba bg-white b--orange br3 bottom-2 w-40 fixed z-1">
 				{menuItems}
 			</ul>
 		);

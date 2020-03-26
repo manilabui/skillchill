@@ -59,10 +59,11 @@ export default props => {
 	useEffect(getCurrUserSkills, []);
 
 	const handlePageChange = (newPage, postOrSkill) => {
-		// TODO: pass in skill obj with name + id
 		if (newPage === "skill") {
-			setPage(postOrSkill);
-			// get only posts related to the skill
+			const { id, name } = postOrSkill;
+
+			setPage(name);
+			getCurrPosts("skill", id);
 		} else setPage(newPage);
 
 		if (newPage === "my profile") getCurrPosts("skillager", skillagerId);
@@ -79,6 +80,7 @@ export default props => {
 				currPosts={currPosts}
 				currPage={currPage}
 				handlePageChange={handlePageChange}
+				getCurrPosts={getCurrPosts}
 				avatar={avatar}
 				userInfo={userInfo}
 				{...props}
@@ -87,11 +89,11 @@ export default props => {
 				<Route
 					render={props => (
 						<BottomNav
-							{...props}
 							handlePageChange={handlePageChange}
 							currPage={currPage}
 							avatar={avatar}
 							userSkills={currUserSkills}
+							{...props}
 						/>
 					)}
 				/>
