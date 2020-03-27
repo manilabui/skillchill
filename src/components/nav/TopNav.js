@@ -2,15 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./TopNav.css";
 
-export default () => {
-	const handleLogoClick = () => {
-		console.log("click");
-		// TODO: display affordance to log out
-	};
-
+export default ({ handleLogout })=> {
 	return (
 		<nav className="fixed tc w-100 bg-dark-green pv2">
-			<h1 className="dib f4 fl pl3 fw5 white washed-yellow" onClick={handleLogoClick}>
+			<h1 className="dib f4 fl pl3 fw5 white washed-yellow" onClick={handleLogout}>
 				skillchill
 			</h1>
 			<Link className="dib fr" to="/search/skills">

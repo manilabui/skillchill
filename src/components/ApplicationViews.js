@@ -1,5 +1,6 @@
 import React from "react";
-import { Route, withRouter } from "react-router-dom";
+import { Route, Redirect, withRouter } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 import Register from "./auth/Register";
 import Login from "./auth/Login";
 import Home from "./Home";
@@ -9,9 +10,21 @@ import SkillSearch from "./skills/SkillSearch";
 import SkillForm from "./skills/SkillForm";
 
 const ApplicationViews = props => {
+  const { isAuthenticated } = useAuth();
+
   return (
     <div className="avenir">
-      <Route exact path="/" render={props => <Home {...props} />} />
+      <Route
+        exact
+        path="/"
+        render={props => {
+          if (isAuthenticated()) {
+            return <Home {...props} />;
+          } else {
+            return <Redirect to="/login" />;
+          }
+        }}
+      />
       <Route path="/register" render={props => <Register {...props} />} />
       <Route path="/login" render={props => <Login {...props} />} />
       <Route path="/post/new" render={props => <PostForm {...props} />} />
