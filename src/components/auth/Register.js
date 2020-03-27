@@ -21,7 +21,7 @@ const Register = props => {
       password: password.current.value,
       first_name: firstName.current.value,
       last_name: lastName.current.value,
-      avatar: avatar.current.value
+      avatar: 'http://placekitten.com/200/200'
     };
 
     register(newUser).then(() => props.history.push({ pathname: "/" }));
@@ -67,6 +67,7 @@ const Register = props => {
               className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
               type="text"
               required
+              autoFill={false}
               ref={userName}
               id="username"
               placeholder=""
