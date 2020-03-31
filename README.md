@@ -44,8 +44,9 @@ Requirements: [Yarn](https://yarnpkg.com/) _or_ [NPM](https://www.npmjs.com/get-
 
 - _Mockups_: Figma (Check out the mockup [here](https://www.figma.com/file/Suj0lH1JMpf95IM1sA4nHR/Skillchill?node-id=41%3A60))
 - _JavaScript_: React with Hooks
+- _Python_: Django REST Framework
 - _Styling_: Tachyons, CSS
 - _Utility Libraries_: Filepond, Lodash, React-Swipeable
+- _Database_: SQLite 3
 - _Storage_: Firebase (For media storage)
-- _REST API_: Skillchill API
 - _Version Control_: Git, GitHub
