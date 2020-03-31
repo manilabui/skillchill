@@ -6,7 +6,7 @@ Find me on: [Portfolio](www.manilabui.com)|[LinkedIn](https://www.linkedin.com/i
 
 Skillchill is an app for those looking to track their progression on the skills they are learning and get feedback from others learning the same skills. As a lifelong student, I have several skills I would like to improve upon, such as powerlifting. 
 
-Previously, I've posted my lifting videos on Instagram due to the ability to write notes about my sessions in the captions. It was a great format, but not the best platform, especially if you want to post about several skills. There isn't a good way to organize them on Instagram, and your followers probably don't want to be bombarded with your skill posts. My app allows users to follow the skills that interest them.
+Previously, I've posted my lifting videos on Instagram due to the ability to write notes about my sessions in the captions. It was a great format, but not the best platform, especially if you want to post about several skills. There isn't a good way to organize them on Instagram, and your followers probably don't want to be bombarded with your skill posts. My app allows users to categorize their posts according to their skills and follow only the skills that interest them.
 
 ## Installation
 
