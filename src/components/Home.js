@@ -6,6 +6,7 @@ import TopNav from "./nav/TopNav";
 import BottomNav from "./nav/BottomNav";
 // import Profile from "./profile/Profile"
 import PostList from "./posts/PostList";
+import { sortBy } from "lodash";
 
 export default props => {
 	const { logout } = useAuth()

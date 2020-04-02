@@ -17,7 +17,7 @@ export default ({ currPage, handlePageChange, avatar, userSkills }) => {
 
 			return (
 				<li key={id} 
-					className="pa2 b--orange dib inline-flex items-center"
+					className="pa2 b--orange dib inline-flex w-100"
 					onClick={() => handlePageChange("skill", skill)}
 				>
 					<img src={avatar} alt="avatar" className="br-100 h1 w1 dib" />
