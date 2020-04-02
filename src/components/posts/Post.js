@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import Moment from 'react-moment';
+import moment from 'moment/min/moment-with-locales';
 import { ReactComponent as CommentIcon } from "../../assets/mdi_mode_comment.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/icon_close.svg";
 import { Swipeable } from "react-swipeable";
@@ -6,8 +8,30 @@ import { getAll, getItem, deleteItem } from "../../modules/apiManager";
 import CommentList from "../comments/CommentList";
 import "./Post.css";
 
+moment.updateLocale('en', {
+  relativeTime: {
+    future: 'in %s',
+    past: '%s ago',
+    s:  'seconds',
+    ss: '%ss',
+    m:  'a minute',
+    mm: '%dm',
+    h:  'an hour',
+    hh: '%dh',
+    d:  'a day',
+    dd: '%dd',
+    M:  'a month',
+    MM: '%dM',
+    y:  'a year',
+    yy: '%dY'
+  }
+});
+
+Moment.globalMoment = moment;
+
 export default ({
 	id,
+	created_at,
 	skillager,
 	skill,
 	post_type,
@@ -117,11 +141,12 @@ export default ({
 					{currPostElem}
 				</Swipeable>
 			</div>
-			<div className="ph2 pt2 pb1 f7 fw3 dib">
+			<div className="ph2 pt2 f7 fw3 dib">
 				{currPage !== "my profile" ? (
-					<span className="fw6 pr2">{username}</span>
+					<span className="fw6">{username} • </span>
 				) : null}
-				{currPageCaption}
+				<Moment className="o-70" date={created_at} fromNow ago/>
+				<div className="pv1 lh-copy">{currPageCaption}</div>
 			</div>
 			<CommentIcon className="pa1 dib fr z-1" onClick={handleCommentClick} />
 			{currPage === "post" ? (
