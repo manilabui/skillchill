@@ -12,3 +12,7 @@ img, video {
 .bullet {
 	font-size: 8px;
 }
+
+.comment-icon {
+	background: url(../../assets/mdi_mode_comment.svg) no-repeat 6px;
+}

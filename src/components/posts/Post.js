@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
-import Moment from 'react-moment';
-import moment from 'moment/min/moment-with-locales';
+import Moment from "react-moment";
+import moment from "moment/min/moment-with-locales";
 import { ReactComponent as CommentIcon } from "../../assets/mdi_mode_comment.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/icon_close.svg";
 import { Swipeable } from "react-swipeable";
@@ -8,23 +8,23 @@ import { getAll, getItem, deleteItem } from "../../modules/apiManager";
 import CommentList from "../comments/CommentList";
 import "./Post.css";
 
-moment.updateLocale('en', {
-  relativeTime: {
-    future: 'in %s',
-    past: '%s ago',
-    s:  'seconds',
-    ss: '%ss',
-    m:  'a minute',
-    mm: '%dm',
-    h:  'an hour',
-    hh: '%dh',
-    d:  'a day',
-    dd: '%dd',
-    M:  'a month',
-    MM: '%dM',
-    y:  'a year',
-    yy: '%dY'
-  }
+moment.updateLocale("en", {
+	relativeTime: {
+		future: "in %s",
+		past: "%s ago",
+		s: "seconds",
+		ss: "%ss",
+		m: "a minute",
+		mm: "%dm",
+		h: "an hour",
+		hh: "%dh",
+		d: "a day",
+		dd: "%dd",
+		M: "a month",
+		MM: "%dM",
+		y: "a year",
+		yy: "%dY"
+	}
 });
 
 Moment.globalMoment = moment;
@@ -121,9 +121,8 @@ export default ({
 
 	return (
 		<article>
-
 			{currPage === "my profile" ? (
-				<div className="mb1 dib pa2 pt3 inline-flex items-center w-100">	
+				<div className="mb1 dib pa2 pt3 inline-flex items-center w-100">
 					<div className="dib w-90 inline-flex items-center">
 						<img src={avatar} alt="avatar" className="br-100 h1 w1 dib" />
 						<span className="pl2 f6 fw6 dib">{name}</span>
@@ -147,20 +146,22 @@ export default ({
 			<div className="pa2 mb3 f7 fw3 dib o-80">
 				<div className="inline-flex items-center">
 					{currPage !== "my profile" ? (
-							<Fragment>
-								<img src={userAvatar} alt="avatar" className="br-100 h1 w1 dib" />
-								<span className="fw6 pl2"> {username} </span>
-								<span className="bullet ph1">•</span>
-							</Fragment>
+						<Fragment>
+							<img src={userAvatar} alt="avatar" className="br-100 h1 w1 dib" />
+							<span className="fw6 pl2"> {username} </span>
+							<span className="bullet ph1">•</span>
+						</Fragment>
 					) : null}
 					<span className="fw6"> {name} </span>
 					<span className="bullet ph1">•</span>
-				<Moment className="o-70" date={created_at} fromNow ago/>
+					<Moment className="o-70" date={created_at} fromNow ago />
 				</div>
 				<div className="caption pv1 lh-copy">{currPageCaption}</div>
 			</div>
 
-			<CommentIcon className="pa1 dib fr" onClick={handleCommentClick} />
+			<div className="comment-icon pa1 dib fr">
+				{/*<CommentIcon onClick={handleCommentClick} />*/}
+			</div>
 			{currPage === "post" ? (
 				<CommentList
 					post_id={id}
@@ -168,7 +169,6 @@ export default ({
 					getComments={getComments}
 				/>
 			) : null}
-
 		</article>
 	);
 };
