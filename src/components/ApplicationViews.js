@@ -25,7 +25,6 @@ const ApplicationViews = props => {
           }
         }}
       />
-
       <Route path="/register" render={props => <Register {...props} />} />
       <Route path="/login" render={props => <Login {...props} />} />
       <Route path="/post/new" render={props => <PostForm {...props} />} />

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Post from "./Post";
+import Profile from "../profile/Profile";
 
 export default ({
 	currPosts,
@@ -23,5 +24,15 @@ export default ({
 		);
 	});
 
-	return <section className="w-100 pv5">{postArr}</section>;
+	const postSectionStyling =
+		currPage === "my profile" ? "w-100 pb5" : "w-100 pv5";
+
+	return (
+		<Fragment>
+			{currPage === "my profile" ? (
+				<Profile avatar={avatar} userInfo={userInfo} />
+			) : null}
+			<section className={postSectionStyling}>{postArr}</section>
+		</Fragment>
+	);
 };

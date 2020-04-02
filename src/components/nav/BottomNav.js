@@ -12,12 +12,12 @@ export default ({ currPage, handlePageChange, avatar, userSkills }) => {
 		showMenu ? setMenuDisplay(false) : setMenuDisplay(true);
 
 	const menu = () => {
-		const menuItems = userSkills.map(({ skill }, i) => {
+		const menuItems = userSkills.map(({ skill }) => {
 			const { id, name, avatar } = skill
 
 			return (
-				<li key={i} 
-					className="pa2 b--orange dib inline-flex items-center"
+				<li key={id} 
+					className="pa2 b--orange dib inline-flex w-100"
 					onClick={() => handlePageChange("skill", skill)}
 				>
 					<img src={avatar} alt="avatar" className="br-100 h1 w1 dib" />

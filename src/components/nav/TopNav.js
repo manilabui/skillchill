@@ -1,11 +1,10 @@
 import React from "react";
-import { ReactComponent as SearchIcon } from "../../assets/icon_search.svg";
 import { Link } from "react-router-dom";
 import "./TopNav.css";
 
 export default ({ handleLogout })=> {
 	return (
-		<nav className="fixed tc w-100 bg-dark-green pv2">
+		<nav className="fixed tc w-100 bg-dark-green pv2 z-1">
 			<h1 className="dib f4 fl pl3 fw5 white washed-yellow" onClick={handleLogout}>
 				skillchill
 			</h1>

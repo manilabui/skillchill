@@ -1,13 +1,36 @@
-import React, { useState, useEffect } from "react";
-import { ReactComponent as CommentIcon } from "../../assets/mdi_mode_comment.svg";
+import React, { Fragment, useState, useEffect } from "react";
+import Moment from "react-moment";
+import moment from "moment/min/moment-with-locales";
 import { ReactComponent as DeleteIcon } from "../../assets/icon_close.svg";
 import { Swipeable } from "react-swipeable";
 import { getAll, getItem, deleteItem } from "../../modules/apiManager";
 import CommentList from "../comments/CommentList";
 import "./Post.css";
 
+moment.updateLocale("en", {
+	relativeTime: {
+		future: "in %s",
+		past: "%s ago",
+		s: "seconds",
+		ss: "%ss",
+		m: "a minute",
+		mm: "%dm",
+		h: "an hour",
+		hh: "%dh",
+		d: "a day",
+		dd: "%dd",
+		M: "a month",
+		MM: "%dM",
+		y: "a year",
+		yy: "%dY"
+	}
+});
+
+Moment.globalMoment = moment;
+
 export default ({
 	id,
+	created_at,
 	skillager,
 	skill,
 	post_type,
@@ -97,18 +120,19 @@ export default ({
 
 	return (
 		<article>
-			<div className="mb1 dib pa2 pt3 inline-flex items-center w-100">
-				<div className="dib w-90 inline-flex items-center">
-					<img src={avatar} alt="avatar" className="br-100 h1 w1 dib" />
-					<span className="pl2 f6 fw6 dib">{name}</span>
-				</div>
-				{currPage === "my profile" ? (
+			{currPage === "my profile" ? (
+				<div className="mb1 dib pa2 pt3 inline-flex items-center w-100">
+					<div className="dib w-90 inline-flex items-center">
+						<img src={avatar} alt="avatar" className="br-100 h1 w1 dib" />
+						<span className="pl2 f6 fw6 dib">{name}</span>
+					</div>
 					<DeleteIcon
 						className="pl6 f6 fw6 fr w-10"
 						onClick={handleDeleteClick}
 					/>
-				) : null}
-			</div>
+				</div>
+			) : null}
+
 			<div className="w-100">
 				<Swipeable
 					onSwipedLeft={handleLeftPostSwipe}
@@ -117,13 +141,28 @@ export default ({
 					{currPostElem}
 				</Swipeable>
 			</div>
-			<div className="ph2 pt2 pb1 f7 fw3 dib">
-				{currPage !== "my profile" ? (
-					<span className="fw6 pr2">{username}</span>
-				) : null}
-				{currPageCaption}
+
+			<div className="ph2 mb2 pt2 pb1 f7 fw3 dib o-80">
+				<div className="inline-flex items-center">
+					{currPage !== "my profile" ? (
+						<Fragment>
+							<img src={userAvatar} alt="avatar" className="br-100 h1 w1 dib" />
+							<span className="fw6 pl2"> {username} </span>
+							<span className="bullet ph1">•</span>
+						</Fragment>
+					) : null}
+					<span className="fw6"> {name} </span>
+					<span className="bullet ph1">•</span>
+					<Moment className="fw3 o-70" date={created_at} fromNow ago />
+				</div>
+				<div className="caption pt1 lh-copy">{currPageCaption}</div>
 			</div>
-			<CommentIcon className="pa1 dib fr z-1" onClick={handleCommentClick} />
+
+			{currPage !== "post" ? (
+				<div className="comment-icon ph1 dib fr" onClick={handleCommentClick}>
+					<button className="comment-count white">....</button>
+				</div>
+			) : null}
 			{currPage === "post" ? (
 				<CommentList
 					post_id={id}
