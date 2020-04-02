@@ -4,3 +4,11 @@ img, video {
   height:400px;
   z-index: -1000;
 }
+
+.caption {
+	padding-left: 0px;
+}
+
+.bullet {
+	font-size: 8px;
+}

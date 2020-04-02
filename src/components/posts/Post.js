@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import Moment from 'react-moment';
 import moment from 'moment/min/moment-with-locales';
 import { ReactComponent as CommentIcon } from "../../assets/mdi_mode_comment.svg";
@@ -121,18 +121,20 @@ export default ({
 
 	return (
 		<article>
-			<div className="mb1 dib pa2 pt3 inline-flex items-center w-100">
-				<div className="dib w-90 inline-flex items-center">
-					<img src={avatar} alt="avatar" className="br-100 h1 w1 dib" />
-					<span className="pl2 f6 fw6 dib">{name}</span>
-				</div>
-				{currPage === "my profile" ? (
+
+			{currPage === "my profile" ? (
+				<div className="mb1 dib pa2 pt3 inline-flex items-center w-100">	
+					<div className="dib w-90 inline-flex items-center">
+						<img src={avatar} alt="avatar" className="br-100 h1 w1 dib" />
+						<span className="pl2 f6 fw6 dib">{name}</span>
+					</div>
 					<DeleteIcon
 						className="pl6 f6 fw6 fr w-10"
 						onClick={handleDeleteClick}
 					/>
-				) : null}
-			</div>
+				</div>
+			) : null}
+
 			<div className="w-100">
 				<Swipeable
 					onSwipedLeft={handleLeftPostSwipe}
@@ -141,14 +143,24 @@ export default ({
 					{currPostElem}
 				</Swipeable>
 			</div>
-			<div className="ph2 pt2 f7 fw3 dib">
-				{currPage !== "my profile" ? (
-					<span className="fw6">{username} • </span>
-				) : null}
+
+			<div className="pa2 mb3 f7 fw3 dib o-80">
+				<div className="inline-flex items-center">
+					{currPage !== "my profile" ? (
+							<Fragment>
+								<img src={userAvatar} alt="avatar" className="br-100 h1 w1 dib" />
+								<span className="fw6 pl2"> {username} </span>
+								<span className="bullet ph1">•</span>
+							</Fragment>
+					) : null}
+					<span className="fw6"> {name} </span>
+					<span className="bullet ph1">•</span>
 				<Moment className="o-70" date={created_at} fromNow ago/>
-				<div className="pv1 lh-copy">{currPageCaption}</div>
+				</div>
+				<div className="caption pv1 lh-copy">{currPageCaption}</div>
 			</div>
-			<CommentIcon className="pa1 dib fr z-1" onClick={handleCommentClick} />
+
+			<CommentIcon className="pa1 dib fr" onClick={handleCommentClick} />
 			{currPage === "post" ? (
 				<CommentList
 					post_id={id}
@@ -156,6 +168,7 @@ export default ({
 					getComments={getComments}
 				/>
 			) : null}
+
 		</article>
 	);
 };
