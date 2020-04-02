@@ -142,7 +142,7 @@ export default ({
 				</Swipeable>
 			</div>
 
-			<div className="pa2 mb3 f7 fw3 dib o-80">
+			<div className="ph2 mb2 pt2 pb1 f7 fw3 dib o-80">
 				<div className="inline-flex items-center">
 					{currPage !== "my profile" ? (
 						<Fragment>
@@ -153,14 +153,16 @@ export default ({
 					) : null}
 					<span className="fw6"> {name} </span>
 					<span className="bullet ph1">•</span>
-					<Moment className="o-70" date={created_at} fromNow ago />
+					<Moment className="fw3 o-70" date={created_at} fromNow ago />
 				</div>
-				<div className="caption pv1 lh-copy">{currPageCaption}</div>
+				<div className="caption pt1 lh-copy">{currPageCaption}</div>
 			</div>
 
-			<div className="comment-icon ph1 dib fr" onClick={handleCommentClick}>
-				<button className="comment-count fw6">.....</button>
-			</div>
+			{currPage !== "post" ? (
+				<div className="comment-icon ph1 dib fr" onClick={handleCommentClick}>
+					<button className="comment-count white">....</button>
+				</div>
+			) : null}
 			{currPage === "post" ? (
 				<CommentList
 					post_id={id}
