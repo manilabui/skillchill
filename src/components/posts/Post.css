@@ -16,3 +16,8 @@ img, video {
 .comment-icon {
 	background: url(../../assets/mdi_mode_comment.svg) no-repeat 6px;
 }
+
+.comment-count {
+	font-size: 9px;
+	padding-bottom: 6px;
+}

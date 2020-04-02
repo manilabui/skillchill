@@ -1,7 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import Moment from "react-moment";
 import moment from "moment/min/moment-with-locales";
-import { ReactComponent as CommentIcon } from "../../assets/mdi_mode_comment.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/icon_close.svg";
 import { Swipeable } from "react-swipeable";
 import { getAll, getItem, deleteItem } from "../../modules/apiManager";
@@ -159,8 +158,8 @@ export default ({
 				<div className="caption pv1 lh-copy">{currPageCaption}</div>
 			</div>
 
-			<div className="comment-icon pa1 dib fr">
-				{/*<CommentIcon onClick={handleCommentClick} />*/}
+			<div className="comment-icon ph1 dib fr" onClick={handleCommentClick}>
+				<button className="comment-count fw6">.....</button>
 			</div>
 			{currPage === "post" ? (
 				<CommentList
