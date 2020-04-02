@@ -6,7 +6,7 @@ import TopNav from "./nav/TopNav";
 import BottomNav from "./nav/BottomNav";
 // import Profile from "./profile/Profile"
 import PostList from "./posts/PostList";
-import { sortBy } from "lodash";
+import { orderBy } from "lodash";
 
 export default props => {
 	const { logout } = useAuth()
@@ -42,8 +42,9 @@ export default props => {
 				postArrs.reduce((prevArr, currArr) => prevArr.concat(currArr), [])
 			)
 			.then(posts => {
-				// TODO: order posts by date & remove your own posts
-				setPosts(posts);
+				const sortedPosts = orderBy(posts, ({ created_at }) => new Date(created_at), 'desc')
+
+				setPosts(sortedPosts);
 			});
 	};
 
