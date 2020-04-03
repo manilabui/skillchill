@@ -33,6 +33,7 @@ Requirements: [Yarn](https://yarnpkg.com/) _or_ [NPM](https://www.npmjs.com/get-
    npm run start
    ```
 1. If your browser doesn't open and navigate to the app automatically, navigate to [http://localhost:3000](http://localhost:3000) to view it in the browser in development mode.
+1. Make sure you get the REST API running locally as well. Follow the instructions [here](https://github.com/manilabui/skillchill-api).
 
 ---
 
