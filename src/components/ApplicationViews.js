@@ -17,13 +17,9 @@ const ApplicationViews = props => {
       <Route
         exact
         path="/"
-        render={props => {
-          if (isAuthenticated()) {
-            return <Home {...props} />;
-          } else {
-            return <Redirect to="/login" />;
-          }
-        }}
+        render={props =>
+          isAuthenticated() ? <Home {...props} /> : <Redirect to="/login" />
+        }
       />
       <Route path="/register" render={props => <Register {...props} />} />
       <Route path="/login" render={props => <Login {...props} />} />
