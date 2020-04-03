@@ -39,10 +39,16 @@ Requirements: [Yarn](https://yarnpkg.com/) _or_ [NPM](https://www.npmjs.com/get-
 
 ## Examples of the App in action
 
-##### Search for a skill or create a new one | Create a new post | Comment on a post + delete your own post
+##### Search for a skill or create a new one.
 
 ![](src/assets/skill_search_create.gif)
+
+##### Create a new post.
+
 ![](src/assets/post_create.gif)
+
+##### Comment on a post and delete one of your own posts.
+
 ![](src/assets/post_comment_and_delete.gif)
 
 ---
