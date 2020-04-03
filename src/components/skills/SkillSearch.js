@@ -41,7 +41,12 @@ export default props => {
       is_moderator: false
     };
 
-    if (skillFollowConfirmed) postItem("userskills", userSkillObj);
+    if (skillFollowConfirmed)
+      postItem("userskills", userSkillObj).then(() => {
+        const remainingSkills = skills.filter(skill => skill.id !== id);
+        setSkills(remainingSkills);
+        setResults([]);
+      });
   };
 
   const searchResultsItems = searchResults.map(({ id, name, avatar }) => {

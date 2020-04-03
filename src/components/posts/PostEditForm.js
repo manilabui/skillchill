@@ -133,6 +133,7 @@ const PostEditForm = ({ location, history }) => {
               ref={currCaptionInput}
               id="caption"
               autoFocus
+              autoComplete="off"
               placeholder=""
             />
           </div>

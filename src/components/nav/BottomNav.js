@@ -35,7 +35,7 @@ export default ({ currPage, handlePageChange, avatar, userSkills }) => {
 
 	return (
 		<Fragment>
-			{showMenu ? menu() : null}
+			{showMenu && menu()}
 			<nav className="fixed bottom-0 w-100 bg-washed-yellow inline-flex items-center">
 				<div className='w-80 inline-flex items-center'>
 					<HomeIcon

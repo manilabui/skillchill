@@ -120,7 +120,7 @@ export default ({
 
 	return (
 		<article>
-			{currPage === "my profile" ? (
+			{currPage === "my profile" && (
 				<div className="mb1 dib pa2 pt3 inline-flex items-center w-100">
 					<div className="dib w-90 inline-flex items-center">
 						<img src={avatar} alt="avatar" className="br-100 h1 w1 dib" />
@@ -131,7 +131,7 @@ export default ({
 						onClick={handleDeleteClick}
 					/>
 				</div>
-			) : null}
+			)}
 
 			<div className="w-100">
 				<Swipeable
@@ -144,13 +144,13 @@ export default ({
 
 			<div className="ph2 mb2 pt2 pb1 f7 fw3 dib o-80">
 				<div className="inline-flex items-center">
-					{currPage !== "my profile" ? (
+					{currPage !== "my profile" && (
 						<Fragment>
 							<img src={userAvatar} alt="avatar" className="br-100 h1 w1 dib" />
 							<span className="fw6 pl2"> {username} </span>
 							<span className="bullet ph1">•</span>
 						</Fragment>
-					) : null}
+					)}
 					<span className="fw6"> {name} </span>
 					<span className="bullet ph1">•</span>
 					<Moment className="fw3 o-70" date={created_at} fromNow ago />
@@ -158,18 +158,18 @@ export default ({
 				<div className="caption pt1 lh-copy">{currPageCaption}</div>
 			</div>
 
-			{currPage !== "post" ? (
+			{currPage !== "post" && (
 				<div className="comment-icon ph1 dib fr" onClick={handleCommentClick}>
 					<button className="comment-count white">....</button>
 				</div>
-			) : null}
-			{currPage === "post" ? (
+			)}
+			{currPage === "post" && (
 				<CommentList
 					post_id={id}
 					comments={currComments}
 					getComments={getComments}
 				/>
-			) : null}
+			)}
 		</article>
 	);
 };

@@ -38,6 +38,7 @@ export default ({ post_id, comments, getComments }) => {
 					<input
 						required
 						autoFocus
+						autoComplete="off"
 						className="input-reset pa1 ba b--light-silver bg-white hover-bg-black hover-white dib w-90"
 						type="text"
 						ref={commentInput}
